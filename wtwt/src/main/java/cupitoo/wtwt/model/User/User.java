@@ -1,5 +1,6 @@
 package cupitoo.wtwt.model.User;
 
+import cupitoo.wtwt.model.Image;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -16,6 +17,9 @@ public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id")
+    private Image profileImage;
     @NotEmpty
     private String nickname;
     @NotEmpty
