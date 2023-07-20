@@ -145,3 +145,4 @@ replay_pid*
 *.yml
 application.properties
 .DS_Store
+**/image/
