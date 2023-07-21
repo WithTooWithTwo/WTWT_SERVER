@@ -1,10 +1,10 @@
-package cupitoo.wtwt.dto.user;
+package cupitoo.wtwt.controller.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class SignUpRes {
+public class LoginRes {
     private Long id;
 }

@@ -1,7 +1,5 @@
-package cupitoo.wtwt.controller;
+package cupitoo.wtwt.controller.user;
 
-import cupitoo.wtwt.dto.user.SignUpRes;
-import cupitoo.wtwt.dto.user.SignUpReq;
 import cupitoo.wtwt.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

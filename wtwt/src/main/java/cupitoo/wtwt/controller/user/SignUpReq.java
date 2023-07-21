@@ -1,4 +1,4 @@
-package cupitoo.wtwt.dto.user;
+package cupitoo.wtwt.controller.user;
 
 import cupitoo.wtwt.model.User.Gender;
 import jakarta.validation.constraints.NotEmpty;

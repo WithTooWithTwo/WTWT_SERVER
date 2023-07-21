@@ -1,4 +1,4 @@
-package cupitoo.wtwt.dto.login;
+package cupitoo.wtwt.controller.login;
 
 import lombok.Data;
 

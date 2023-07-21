@@ -1,8 +1,6 @@
-package cupitoo.wtwt.controller;
+package cupitoo.wtwt.controller.login;
 
 import cupitoo.wtwt.config.SessionConst;
-import cupitoo.wtwt.dto.login.LoginReq;
-import cupitoo.wtwt.dto.login.LoginRes;
 import cupitoo.wtwt.service.LoginService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
