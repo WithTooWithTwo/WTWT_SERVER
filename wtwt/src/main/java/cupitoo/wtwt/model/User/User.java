@@ -34,4 +34,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender; //성별 [MALE, FEMALE, HIDE]
     private LocalDate birthday;
+
+    //== 수정 메서드 ==//
+    public void updateRate(Float rate) {
+        this.rate = rate;
+    }
 }

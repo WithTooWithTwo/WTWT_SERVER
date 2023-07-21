@@ -43,14 +43,16 @@ public class ReviewService {
 
         validatePermission(user, group);
 
+        User receiver = userRepository.findById(reviewDto.getReceiverId()).get();
         Review review = Review.builder()
                 .rete(reviewDto.getRete())
-                .receiver(userRepository.findById(reviewDto.getReceiverId()).get())
+                .receiver(receiver)
                 .group(group)
                 .comment(reviewDto.getComment().orElse(null))
                 .build();
-
         reviewRepository.save(review);
+
+        receiver.updateRate(reviewRepository.getAverageRateByReceiver(receiver));
 
         for (Long id : reviewDto.getPersonalities().orElse(new ArrayList<>())) {
             PersonalityReview pr = new PersonalityReview(review, personalityRepository.findById(id).get());

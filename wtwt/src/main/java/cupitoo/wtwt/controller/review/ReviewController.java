@@ -20,11 +20,6 @@ import java.util.List;
 @RequestMapping("/reviews")
 public class ReviewController {
     private final ReviewService reviewService;
-    private final FileStore fileStore;
-
-    /**
-     * loginUser + 그룹id -> 해당 그룹에서 리뷰해야 하는 사람의 list
-     */
 
     /**
      * 그룹에서 리뷰하기 -> 리뷰 당한 사람의 rete update!
@@ -46,7 +41,7 @@ public class ReviewController {
     /**
      * 리뷰 보기 -> 별점
      */
-
+    
 
     /**
      * 예외 핸들러
