@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class SignUpReq {
     private String name;
     private String phoneNumber;
+    @NotEmpty
     private String email;
     @NotEmpty
     private String password;

@@ -29,6 +29,7 @@ public class User {
     private String name;
     private String phoneNumber;
     @Email
+    @NotEmpty
     private String email;
     @Enumerated(EnumType.STRING)
     private Gender gender; //성별 [MALE, FEMALE, HIDE]

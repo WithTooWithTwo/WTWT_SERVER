@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -55,10 +54,8 @@ public class UserService {
         User findUser1 = userRepository.findByNickname(request.getNickname());
         if(findUser1 != null) throw new IllegalStateException("이미 존재하는 이메일입니다.");
 
-        if(request.getEmail() != null) {
-            User findUser2 = userRepository.findByNickname(request.getEmail());
-            if(findUser2 != null) throw new IllegalStateException("이미 존재하는 이메일입니다.");
-        }
+        User findUser2 = userRepository.findByNickname(request.getEmail());
+        if(findUser2 != null) throw new IllegalStateException("이미 존재하는 이메일입니다.");
 
         if(request.getPhoneNumber() != null) {
             User findUser3 = userRepository.findByPhoneNumber(request.getPhoneNumber());
