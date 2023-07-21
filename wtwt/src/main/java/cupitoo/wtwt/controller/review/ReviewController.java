@@ -2,7 +2,9 @@ package cupitoo.wtwt.controller.review;
 
 import cupitoo.wtwt.annotation.Login;
 import cupitoo.wtwt.controller.ErrorResponse;
+import cupitoo.wtwt.service.PersonalityService;
 import cupitoo.wtwt.service.ReviewService;
+import cupitoo.wtwt.service.StyleService;
 import cupitoo.wtwt.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ import java.util.List;
 @RequestMapping("/reviews")
 public class ReviewController {
     private final ReviewService reviewService;
+
 
     /**
      * 그룹에서 리뷰하기 -> 리뷰 당한 사람의 rete update!
