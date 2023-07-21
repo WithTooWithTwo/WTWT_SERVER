@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Group {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
+    @Column(name = "group_id")
     private Long id;
     @OneToMany(mappedBy = "group")
     private List<GroupUser> members = new ArrayList<>();

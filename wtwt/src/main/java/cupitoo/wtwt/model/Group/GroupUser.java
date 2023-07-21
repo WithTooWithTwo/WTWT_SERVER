@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 public class GroupUser {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
+    @Column(name = "group_user_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
