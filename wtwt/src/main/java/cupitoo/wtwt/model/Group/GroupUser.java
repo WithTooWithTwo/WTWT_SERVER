@@ -8,8 +8,6 @@ import lombok.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
 public class GroupUser {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_user_id")

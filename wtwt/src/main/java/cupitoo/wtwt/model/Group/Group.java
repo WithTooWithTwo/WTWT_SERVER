@@ -1,11 +1,10 @@
 package cupitoo.wtwt.model.Group;
 
+import cupitoo.wtwt.model.Category;
 import cupitoo.wtwt.model.Image;
 import cupitoo.wtwt.model.User.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,6 +13,8 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class Group {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "group_id")
@@ -28,6 +29,9 @@ public class Group {
     private User leader;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Image groupImage;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
     private String groupName; // default: 게시물 제목
     @Enumerated(EnumType.STRING)
     private RecruitStatus status = RecruitStatus.OPEN;

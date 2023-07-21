@@ -32,7 +32,7 @@ public class Post {
     private LocalDateTime lastModifiedAt;
 
     //== 생성 메서드 ==//
-    Post(String title, String text, User createdBy) {
+    public Post(String title, String text, User createdBy) {
         this.title = title;
         this.text = text;
         this.createdBy = createdBy;

@@ -1,7 +1,6 @@
 package cupitoo.wtwt.service;
 
-import cupitoo.wtwt.dto.user.SignUpReq;
-import cupitoo.wtwt.model.Image;
+import cupitoo.wtwt.controller.user.SignUpReq;
 import cupitoo.wtwt.model.User.User;
 import cupitoo.wtwt.repository.UserRepository;
 import cupitoo.wtwt.util.FileStore;

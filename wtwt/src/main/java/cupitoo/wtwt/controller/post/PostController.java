@@ -1,4 +1,4 @@
-package cupitoo.wtwt.controller;
+package cupitoo.wtwt.controller.post;
 
 import cupitoo.wtwt.repository.PostRepository;
 import cupitoo.wtwt.service.PostService;
