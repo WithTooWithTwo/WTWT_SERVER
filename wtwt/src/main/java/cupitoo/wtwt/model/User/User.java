@@ -9,10 +9,10 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@Getter
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -24,13 +24,13 @@ public class User {
     private String nickname;
     @NotEmpty
     private String password;
+    @Email
+    @NotEmpty
+    private String email;
     private Float rate = 0f; //별점 평균
     private String status_message;
     private String name;
     private String phoneNumber;
-    @Email
-    @NotEmpty
-    private String email;
     @Enumerated(EnumType.STRING)
     private Gender gender; //성별 [MALE, FEMALE, HIDE]
     private LocalDate birthday;

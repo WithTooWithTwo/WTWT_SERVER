@@ -16,7 +16,6 @@ public class LoginService {
     public Long login(String email, String password) {
         User user = userRepository.findByEmail(email);
         if (user == null) throw new IllegalStateException("존재하지 않는 이메일 입니다.");
-
         if (user.getPassword().equals(password)) return user.getId();
         else throw new IllegalStateException("잘못된 비밀번호 입니다.");
     }
