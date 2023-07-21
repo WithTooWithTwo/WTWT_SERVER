@@ -1,7 +1,6 @@
 package cupitoo.wtwt.controller.review;
 
 import cupitoo.wtwt.controller.PostResponse;
-import cupitoo.wtwt.model.review.Personality;
 import cupitoo.wtwt.service.PersonalityService;
 import cupitoo.wtwt.service.StyleService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/reviews/options")
+@RequestMapping("/review-options")
 public class ReviewOptionController {
     private final PersonalityService personalityService;
     private final StyleService styleService;
@@ -48,7 +47,7 @@ public class ReviewOptionController {
     /**
      * 동행자 여행 스타일 리스트 조회
      */
-    @GetMapping("/personalities")
+    @GetMapping("/styles")
     public ReviewOptionList findStyles() {
         return new ReviewOptionList(
                 styleService.findAll()
