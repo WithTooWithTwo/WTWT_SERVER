@@ -3,7 +3,6 @@ package cupitoo.wtwt.service;
 import cupitoo.wtwt.controller.post.CreatePostReq;
 import cupitoo.wtwt.model.Category;
 import cupitoo.wtwt.model.Group.*;
-import cupitoo.wtwt.model.User.Gender;
 import cupitoo.wtwt.model.User.User;
 import cupitoo.wtwt.repository.CategoryRepository;
 import cupitoo.wtwt.repository.GroupRepository;
@@ -47,11 +46,9 @@ public class PostService {
         Category category = categoryRepository.findById(request.getCategory_id()).get();
 
         List<GroupUser> members = new ArrayList<>();
-        members.add(new GroupUser());
-
-        for(String email : request.getCompanions()) {
-            companions.add(new GroupUser(userService.findOne(email)));
-        }
+        /**
+         * 여기서부터 하기!
+         * */
 
         Group.GroupBuilder groupBuilder = Group.builder()
                 .groupName(request.getTitle())
@@ -63,7 +60,7 @@ public class PostService {
                 .category(category)
                 .preference(preference)
                 .leader(user)
-                .members();
+                .members(members);
 
 
 
