@@ -46,4 +46,7 @@ public class Post extends BaseTimeEntity {
     public void addImage(Image image) {
         this.images.add(new PostImage(this, image));
     }
+    public void updateHit() {
+        hits += 1;
+    }
 }

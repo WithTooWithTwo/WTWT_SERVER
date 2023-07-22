@@ -1,6 +1,7 @@
 package cupitoo.wtwt.service;
 
 import cupitoo.wtwt.controller.post.CreatePostReq;
+import cupitoo.wtwt.dto.PostDetails;
 import cupitoo.wtwt.model.Category;
 import cupitoo.wtwt.model.Group.*;
 import cupitoo.wtwt.model.Image;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -81,6 +83,24 @@ public class PostService {
         }
 
         return group.getId();
+    }
+
+    /**
+     * 단일 게시글 조회
+     */
+    public PostDetails findPostWithGroup(Long postId) {
+        Post post = postRepository.findById(postId).get();
+        post.getImages(); //강제 초기화
+        post.getCreatedBy().getProfileImage(); //강제 초기화
+        post.updateHit();
+
+        Group group = groupRepository.findByPost(post);
+        List<User> members = group.getMembers().stream()
+                .map(m -> m.getUser())
+                .collect(Collectors.toList());
+
+        PostDetails result = new PostDetails(post, group, members);
+        return result;
     }
 
 }

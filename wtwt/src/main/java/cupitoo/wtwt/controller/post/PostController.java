@@ -2,6 +2,8 @@ package cupitoo.wtwt.controller.post;
 
 import cupitoo.wtwt.annotation.Login;
 import cupitoo.wtwt.controller.PostResponse;
+import cupitoo.wtwt.dto.PostDetails;
+import cupitoo.wtwt.model.Group.Post;
 import cupitoo.wtwt.service.PostService;
 import cupitoo.wtwt.service.UserService;
 import cupitoo.wtwt.util.FileStore;
@@ -35,6 +37,9 @@ public class PostController {
     /**
      * 단일 게시글 조회
      */
-
-
+    @GetMapping("/{id}")
+    public PostDetails findPost(@PathVariable("id") Long id) {
+        PostDetails postDetails = postService.findPostWithGroup(id);
+        return postDetails;
+    }
 }

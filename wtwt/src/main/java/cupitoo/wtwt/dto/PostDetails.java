@@ -1,0 +1,50 @@
+package cupitoo.wtwt.dto;
+
+import cupitoo.wtwt.model.Group.Group;
+import cupitoo.wtwt.model.Group.Post;
+import cupitoo.wtwt.model.User.User;
+import lombok.Data;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Data
+public class PostDetails {
+    private Long post_id;
+    private String title;
+    private int hits;
+    private LocalDateTime postDate;
+    private UserProfile writer;
+    //==============================
+    private LocalDate firstDay;
+    private LocalDate lastDay;
+    private List<String> tags;
+    private List<UserProfile> members;
+    private PreferenceDto preference;
+
+    //==============================
+    private String content;
+    List<String> images;
+
+    public PostDetails(Post post, Group group, List<User> members) {
+        this.post_id = post.getId();
+        this.title = post.getTitle();
+        this.hits = post.getHits();
+        this.postDate = post.getCreatedAt();
+        this.writer = new UserProfile(post.getCreatedBy());
+        this.firstDay = group.getFirstDay();
+        this.lastDay = group.getLastDay();
+        // this.tags = group.getTegs();
+        this.members = members.stream()
+                .map(m -> new UserProfile(m))
+                .collect(Collectors.toList());
+        this.preference = new PreferenceDto(group.getPreference());
+        this.content = post.getText();
+        this.images = post.getImages().stream()
+                .map(i -> i.getImage().getFileName())
+                .collect(Collectors.toList());
+    }
+}
