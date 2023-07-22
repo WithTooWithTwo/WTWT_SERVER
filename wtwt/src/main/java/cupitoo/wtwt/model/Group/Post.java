@@ -1,5 +1,6 @@
 package cupitoo.wtwt.model.Group;
 
+import cupitoo.wtwt.model.BaseTimeEntity;
 import cupitoo.wtwt.model.Image;
 import cupitoo.wtwt.model.User.User;
 import jakarta.persistence.*;
@@ -15,7 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Post {
+public class Post extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
     private Long id;
@@ -28,8 +29,6 @@ public class Post {
     private String title;
     private String text;
     private int hits = 0; // 조회수
-    private LocalDateTime createAt;
-    private LocalDateTime lastModifiedAt;
 
     //== 생성 메서드 ==//
     public Post(String title, String text, User createdBy) {
