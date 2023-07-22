@@ -18,6 +18,7 @@ public class PostDetails {
     private int hits;
     private LocalDateTime postDate;
     private UserProfile writer;
+    private Boolean lightning;
     //==============================
     private LocalDate firstDay;
     private LocalDate lastDay;
@@ -35,6 +36,7 @@ public class PostDetails {
         this.hits = post.getHits();
         this.postDate = post.getCreatedAt();
         this.writer = new UserProfile(post.getCreatedBy());
+        this.lightning = group.isLightning();
         this.firstDay = group.getFirstDay();
         this.lastDay = group.getLastDay();
         // this.tags = group.getTegs();

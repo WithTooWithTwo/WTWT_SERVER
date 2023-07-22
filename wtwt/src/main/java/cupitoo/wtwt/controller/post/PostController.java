@@ -3,15 +3,27 @@ package cupitoo.wtwt.controller.post;
 import cupitoo.wtwt.annotation.Login;
 import cupitoo.wtwt.controller.PostResponse;
 import cupitoo.wtwt.dto.PostDetails;
+import cupitoo.wtwt.dto.PostListElement;
+import cupitoo.wtwt.dto.PreferenceDto;
+import cupitoo.wtwt.model.Category;
+import cupitoo.wtwt.model.Group.OrderOption;
 import cupitoo.wtwt.model.Group.Post;
+import cupitoo.wtwt.model.Group.Preference;
+import cupitoo.wtwt.repository.group.PostSearch;
+import cupitoo.wtwt.service.CategoryService;
 import cupitoo.wtwt.service.PostService;
 import cupitoo.wtwt.service.UserService;
 import cupitoo.wtwt.util.FileStore;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RestController
@@ -19,6 +31,7 @@ import java.io.IOException;
 @RequestMapping("/posts")
 public class PostController {
     private final PostService postService;
+    private final CategoryService categoryService;
     private final UserService userService;
     private final FileStore fileStore;
 
@@ -33,6 +46,28 @@ public class PostController {
     /**
      * 게시글 리스트 조회
      */
+    @GetMapping
+    public List<PostListElement> findPosts(@RequestParam("category") @Nullable String category,
+                                           @RequestParam("order") @Nullable OrderOption option,
+                                           @RequestParam("lightning") @Nullable Boolean lightning,
+                                           @RequestParam("date") @Nullable String date,
+                                           @ModelAttribute("preference") @Nullable PreferenceDto preference) {
+
+        PostSearch postSearch = new PostSearch();
+        Category findCategory = categoryService.findOneByName(category);
+        postSearch.setCategory(findCategory);
+        postSearch.setOption(option);
+        postSearch.setLightning(lightning);
+        postSearch.setPreference(Preference.builder()
+                        .headCount(preference.getPreferHeadCount())
+                        .minAge(preference.getMinAge())
+                        .maxAge(preference.getMaxAge())
+                        .gender(preference.getGender())
+                        .build());
+        postSearch.setDate(LocalDate.parse(date));
+
+        return postService.findAllWithFilter(postSearch);
+    }
 
     /**
      * 단일 게시글 조회

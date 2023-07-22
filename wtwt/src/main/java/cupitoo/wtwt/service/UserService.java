@@ -5,6 +5,7 @@ import cupitoo.wtwt.model.User.User;
 import cupitoo.wtwt.repository.UserRepository;
 import cupitoo.wtwt.util.FileStore;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 @Service
+@Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserService {

@@ -16,7 +16,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     /**
-     * 동행자 여행 스타일 타입 생성
+     * 카테고리 생성
      */
     @Transactional
     public Category save(String name) {
@@ -24,9 +24,12 @@ public class CategoryService {
     }
 
     /**
-     * 모든 동행자 여행 스타일 타입 조회!
+     * 카테고리 조회!
      */
     public List<Category> findAll() {
         return categoryRepository.findAll();
+    }
+    public Category findOneByName(String name) {
+        return categoryRepository.findByName(name);
     }
 }

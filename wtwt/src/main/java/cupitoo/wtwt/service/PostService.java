@@ -2,16 +2,14 @@ package cupitoo.wtwt.service;
 
 import cupitoo.wtwt.controller.post.CreatePostReq;
 import cupitoo.wtwt.dto.PostDetails;
+import cupitoo.wtwt.dto.PostListElement;
 import cupitoo.wtwt.model.Category;
 import cupitoo.wtwt.model.Group.*;
 import cupitoo.wtwt.model.Image;
 import cupitoo.wtwt.model.User.Gender;
 import cupitoo.wtwt.model.User.User;
 import cupitoo.wtwt.repository.*;
-import cupitoo.wtwt.repository.group.GroupUserRepository;
-import cupitoo.wtwt.repository.group.GroupRepository;
-import cupitoo.wtwt.repository.group.PostImageRepository;
-import cupitoo.wtwt.repository.group.PostRepository;
+import cupitoo.wtwt.repository.group.*;
 import cupitoo.wtwt.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -101,6 +99,10 @@ public class PostService {
 
         PostDetails result = new PostDetails(post, group, members);
         return result;
+    }
+
+    public List<PostListElement> findAllWithFilter(PostSearch postSearch) {
+        return postRepository.findAllWithFilter(postSearch);
     }
 
 }
