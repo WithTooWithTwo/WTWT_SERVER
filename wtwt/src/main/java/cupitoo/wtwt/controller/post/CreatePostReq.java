@@ -1,30 +1,34 @@
 package cupitoo.wtwt.controller.post;
 
 import cupitoo.wtwt.model.User.Gender;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 public class CreatePostReq {
     // 게시글
-    private List<MultipartFile> images = new ArrayList<>();
+    private Optional<List<MultipartFile>> images;
+    @NotNull
     private String title;
+    @NotNull
     private String content;
 
     // 그룹
-    private List<String> members = new ArrayList<>();
+    private Optional<List<String>> members;
+    @NotNull
     private Long category_id;
-    private LocalDate firstDay;
-    private LocalDate lastDay;
-    private boolean lightning = false;
+    private String firstDay;
+    private String lastDay;
+    private Optional<Boolean> lightning;
 
     // 선호 동행 정보
-    private Integer preferHeadCount; // 원하는 동행 인원
-    private Gender preferGender;
-    private Integer preferMinAge;
-    private Integer preferMaxAge;
+    private Optional<Integer> preferHeadCount; // 원하는 동행 인원
+    private Optional<Gender> preferGender;
+    private Optional<Integer> preferMinAge;
+    private Optional<Integer> preferMaxAge;
 }

@@ -16,4 +16,10 @@ public class Category {
 
     @NotEmpty
     private String name;
+
+    //== 생성 메서드 ==//
+
+    public Category(String name) {
+        this.name = name;
+    }
 }

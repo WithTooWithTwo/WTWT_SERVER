@@ -9,6 +9,7 @@ import cupitoo.wtwt.model.review.Review;
 import cupitoo.wtwt.model.review.ReviewImage;
 import cupitoo.wtwt.model.review.StyleReview;
 import cupitoo.wtwt.repository.*;
+import cupitoo.wtwt.repository.group.GroupRepository;
 import cupitoo.wtwt.repository.review.*;
 import cupitoo.wtwt.util.FileStore;
 import lombok.RequiredArgsConstructor;
