@@ -1,6 +1,6 @@
 package cupitoo.wtwt.repository.review;
 
-import cupitoo.wtwt.model.User.User;
+import cupitoo.wtwt.model.user.User;
 import cupitoo.wtwt.model.review.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

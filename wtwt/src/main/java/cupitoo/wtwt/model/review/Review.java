@@ -1,7 +1,7 @@
 package cupitoo.wtwt.model.review;
 
-import cupitoo.wtwt.model.Group.Group;
-import cupitoo.wtwt.model.User.User;
+import cupitoo.wtwt.model.group.Group;
+import cupitoo.wtwt.model.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;

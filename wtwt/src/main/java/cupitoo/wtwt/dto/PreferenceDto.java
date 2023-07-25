@@ -1,7 +1,7 @@
 package cupitoo.wtwt.dto;
 
-import cupitoo.wtwt.model.Group.Preference;
-import cupitoo.wtwt.model.User.Gender;
+import cupitoo.wtwt.model.group.Preference;
+import cupitoo.wtwt.model.user.Gender;
 import lombok.Data;
 
 @Data

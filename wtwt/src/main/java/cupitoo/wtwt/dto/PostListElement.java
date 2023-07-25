@@ -1,8 +1,6 @@
 package cupitoo.wtwt.dto;
 
-import cupitoo.wtwt.model.Group.Group;
-import cupitoo.wtwt.model.Group.Post;
-import cupitoo.wtwt.model.Group.RecruitStatus;
+import cupitoo.wtwt.model.group.RecruitStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package cupitoo.wtwt.controller.user;
 
-import cupitoo.wtwt.model.User.Gender;
+import cupitoo.wtwt.model.user.Gender;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;

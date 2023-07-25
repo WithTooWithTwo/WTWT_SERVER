@@ -1,6 +1,6 @@
 package cupitoo.wtwt.service;
 
-import cupitoo.wtwt.model.User.User;
+import cupitoo.wtwt.model.user.User;
 import cupitoo.wtwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

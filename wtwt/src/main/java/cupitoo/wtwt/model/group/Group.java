@@ -1,8 +1,9 @@
-package cupitoo.wtwt.model.Group;
+package cupitoo.wtwt.model.group;
 
 import cupitoo.wtwt.model.Category;
 import cupitoo.wtwt.model.Image;
-import cupitoo.wtwt.model.User.User;
+import cupitoo.wtwt.model.user.User;
+import cupitoo.wtwt.model.post.Post;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -40,18 +41,33 @@ public class Group {
     private boolean lightning = false;
     @Embedded
     private Preference preference;
+    @OneToMany(mappedBy = "group")
+    private List<GroupNotice> notices = new ArrayList<>();
+    @OneToMany(mappedBy = "group")
+    private List<GroupLink> links = new ArrayList<>();
+    @OneToMany(mappedBy = "group")
+    private List<GroupMemo> memos = new ArrayList<>();
 
     //== 수정 메서드 ==//
-    void addMember(User user) {
+    public void addMember(User user) {
         this.members.add(new GroupUser(this, user));
     }
-    void modifyLeader(User user) {
+    public void addNotice(GroupNotice notice) {
+        this.notices.add(notice);
+    }
+    public void addLink(GroupLink link) {
+        this.links.add(link);
+    }
+    public void addMemo(GroupMemo memo) {
+        this.memos.add(memo);
+    }
+    public void modifyLeader(User user) {
         this.leader = user;
     }
-    void closeRecruit() {
+    public void closeRecruit() {
         this.status = RecruitStatus.CLOSED;
     }
-    void setPost(Post post) {
+    public void setPost(Post post) {
         this.post = post;
     }
 }

@@ -1,13 +1,12 @@
 package cupitoo.wtwt.dto;
 
-import cupitoo.wtwt.model.Group.Group;
-import cupitoo.wtwt.model.Group.Post;
-import cupitoo.wtwt.model.User.User;
+import cupitoo.wtwt.model.group.Group;
+import cupitoo.wtwt.model.post.Post;
+import cupitoo.wtwt.model.user.User;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

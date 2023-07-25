@@ -1,4 +1,4 @@
-package cupitoo.wtwt.model.User;
+package cupitoo.wtwt.model.user;
 
 import cupitoo.wtwt.model.Image;
 import jakarta.persistence.*;

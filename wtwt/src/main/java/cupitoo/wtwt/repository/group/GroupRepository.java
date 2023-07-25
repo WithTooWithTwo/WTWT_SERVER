@@ -1,8 +1,8 @@
 package cupitoo.wtwt.repository.group;
 
-import cupitoo.wtwt.model.Group.Group;
-import cupitoo.wtwt.model.Group.Post;
-import cupitoo.wtwt.model.User.User;
+import cupitoo.wtwt.model.group.Group;
+import cupitoo.wtwt.model.post.Post;
+import cupitoo.wtwt.model.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

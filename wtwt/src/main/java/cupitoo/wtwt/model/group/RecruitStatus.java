@@ -1,4 +1,4 @@
-package cupitoo.wtwt.model.Group;
+package cupitoo.wtwt.model.group;
 
 public enum RecruitStatus {
     OPEN, CLOSED

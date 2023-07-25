@@ -1,6 +1,6 @@
-package cupitoo.wtwt.model.Group;
+package cupitoo.wtwt.model.group;
 
-import cupitoo.wtwt.model.User.Gender;
+import cupitoo.wtwt.model.user.Gender;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

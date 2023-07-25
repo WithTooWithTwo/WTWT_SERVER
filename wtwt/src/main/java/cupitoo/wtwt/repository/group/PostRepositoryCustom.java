@@ -1,6 +1,6 @@
 package cupitoo.wtwt.repository.group;
 
-import cupitoo.wtwt.model.Group.Post;
+import cupitoo.wtwt.model.post.Post;
 
 import java.util.List;
 

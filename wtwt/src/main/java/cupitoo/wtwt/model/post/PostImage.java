@@ -1,6 +1,5 @@
-package cupitoo.wtwt.model.Group;
+package cupitoo.wtwt.model.post;
 
-import cupitoo.wtwt.model.Group.Post;
 import cupitoo.wtwt.model.Image;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

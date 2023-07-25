@@ -1,11 +1,10 @@
 package cupitoo.wtwt.controller.post;
 
-import cupitoo.wtwt.model.User.Gender;
+import cupitoo.wtwt.model.user.Gender;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 

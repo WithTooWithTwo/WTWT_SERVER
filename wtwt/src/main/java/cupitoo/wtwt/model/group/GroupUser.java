@@ -1,7 +1,6 @@
-package cupitoo.wtwt.model.Group;
+package cupitoo.wtwt.model.group;
 
-import cupitoo.wtwt.model.Image;
-import cupitoo.wtwt.model.User.User;
+import cupitoo.wtwt.model.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 

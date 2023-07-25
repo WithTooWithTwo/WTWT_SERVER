@@ -1,8 +1,8 @@
 package cupitoo.wtwt.repository.group;
 
 import cupitoo.wtwt.model.Category;
-import cupitoo.wtwt.model.Group.OrderOption;
-import cupitoo.wtwt.model.Group.Preference;
+import cupitoo.wtwt.model.group.OrderOption;
+import cupitoo.wtwt.model.group.Preference;
 import lombok.Getter;
 import lombok.Setter;
 

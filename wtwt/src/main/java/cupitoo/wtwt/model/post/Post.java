@@ -1,15 +1,15 @@
-package cupitoo.wtwt.model.Group;
+package cupitoo.wtwt.model.post;
 
 import cupitoo.wtwt.model.BaseTimeEntity;
+import cupitoo.wtwt.model.group.Group;
 import cupitoo.wtwt.model.Image;
-import cupitoo.wtwt.model.User.User;
+import cupitoo.wtwt.model.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

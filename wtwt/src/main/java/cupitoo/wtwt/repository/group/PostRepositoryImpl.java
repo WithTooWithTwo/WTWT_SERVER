@@ -4,16 +4,16 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import cupitoo.wtwt.model.Category;
-import cupitoo.wtwt.model.Group.OrderOption;
-import cupitoo.wtwt.model.Group.Post;
+import cupitoo.wtwt.model.group.OrderOption;
+import cupitoo.wtwt.model.post.Post;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static cupitoo.wtwt.model.Group.QGroup.group;
-import static cupitoo.wtwt.model.Group.QPost.post;
 import static cupitoo.wtwt.model.QCategory.category;
+import static cupitoo.wtwt.model.group.QGroup.group;
+import static cupitoo.wtwt.model.post.QPost.post;
 
 @Repository
 @RequiredArgsConstructor

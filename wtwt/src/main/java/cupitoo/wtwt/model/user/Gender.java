@@ -1,4 +1,4 @@
-package cupitoo.wtwt.model.User;
+package cupitoo.wtwt.model.user;
 
 public enum Gender {
     MALE, FEMALE, NONE

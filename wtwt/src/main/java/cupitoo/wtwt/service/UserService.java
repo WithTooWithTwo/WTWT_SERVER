@@ -1,7 +1,7 @@
 package cupitoo.wtwt.service;
 
 import cupitoo.wtwt.controller.user.SignUpReq;
-import cupitoo.wtwt.model.User.User;
+import cupitoo.wtwt.model.user.User;
 import cupitoo.wtwt.repository.UserRepository;
 import cupitoo.wtwt.util.FileStore;
 import lombok.RequiredArgsConstructor;

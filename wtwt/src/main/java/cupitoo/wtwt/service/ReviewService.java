@@ -1,9 +1,9 @@
 package cupitoo.wtwt.service;
 
 import cupitoo.wtwt.controller.review.ReviewDto;
-import cupitoo.wtwt.model.Group.Group;
+import cupitoo.wtwt.model.group.Group;
 import cupitoo.wtwt.model.Image;
-import cupitoo.wtwt.model.User.User;
+import cupitoo.wtwt.model.user.User;
 import cupitoo.wtwt.model.review.PersonalityReview;
 import cupitoo.wtwt.model.review.Review;
 import cupitoo.wtwt.model.review.ReviewImage;

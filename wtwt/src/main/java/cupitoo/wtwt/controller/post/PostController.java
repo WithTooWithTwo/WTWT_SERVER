@@ -6,9 +6,8 @@ import cupitoo.wtwt.dto.PostDetails;
 import cupitoo.wtwt.dto.PostListElement;
 import cupitoo.wtwt.dto.PreferenceDto;
 import cupitoo.wtwt.model.Category;
-import cupitoo.wtwt.model.Group.OrderOption;
-import cupitoo.wtwt.model.Group.Post;
-import cupitoo.wtwt.model.Group.Preference;
+import cupitoo.wtwt.model.group.OrderOption;
+import cupitoo.wtwt.model.group.Preference;
 import cupitoo.wtwt.repository.group.PostSearch;
 import cupitoo.wtwt.service.CategoryService;
 import cupitoo.wtwt.service.PostService;
@@ -22,8 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RestController

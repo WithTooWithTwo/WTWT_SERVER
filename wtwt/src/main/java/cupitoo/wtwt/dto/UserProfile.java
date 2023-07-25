@@ -1,9 +1,7 @@
 package cupitoo.wtwt.dto;
 
-import cupitoo.wtwt.model.User.User;
+import cupitoo.wtwt.model.user.User;
 import lombok.Data;
-
-import java.util.ArrayList;
 
 @Data
 public class UserProfile {
