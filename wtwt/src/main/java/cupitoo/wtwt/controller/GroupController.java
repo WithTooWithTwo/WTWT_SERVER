@@ -1,6 +1,7 @@
 package cupitoo.wtwt.controller;
 
 import cupitoo.wtwt.dto.GroupDto;
+import cupitoo.wtwt.dto.UserProfile;
 import cupitoo.wtwt.service.GroupService;
 import cupitoo.wtwt.util.FileStore;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -22,5 +25,10 @@ public class GroupController {
     public GroupDto findGroup(@PathVariable("id") Long id) {
         GroupDto groupDto = groupService.findOne(id);
         return groupDto;
+    }
+    // http://localhost:8080/groups/1/members
+    @GetMapping("/{id}/members")
+    public List<UserProfile> findGroupMember(@PathVariable("id") Long id) {
+        return groupService.findMembers(id);
     }
 }
