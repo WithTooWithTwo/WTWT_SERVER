@@ -25,10 +25,12 @@ public class Post extends BaseTimeEntity {
     private User createdBy;
     @OneToMany(mappedBy = "post")
     private List<PostImage> images = new ArrayList<>();
+    @OneToOne(mappedBy = "post", fetch = FetchType.LAZY)
+    private Group group;
     @NotEmpty
     private String title;
     private String text;
-    private int hits = 0; // 조회수
+    private int hits; // 조회수
 
     //== 생성 메서드 ==//
     public Post(String title, String text, User createdBy) {
@@ -48,5 +50,10 @@ public class Post extends BaseTimeEntity {
     }
     public void updateHit() {
         hits += 1;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+        group.setPost(this);
     }
 }

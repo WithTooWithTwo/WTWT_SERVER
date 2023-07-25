@@ -1,9 +1,7 @@
 package cupitoo.wtwt.service;
 
 import cupitoo.wtwt.model.Category;
-import cupitoo.wtwt.model.review.Style;
 import cupitoo.wtwt.repository.CategoryRepository;
-import cupitoo.wtwt.repository.review.StyleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

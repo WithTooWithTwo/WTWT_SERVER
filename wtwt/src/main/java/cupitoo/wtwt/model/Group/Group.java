@@ -51,5 +51,7 @@ public class Group {
     void closeRecruit() {
         this.status = RecruitStatus.CLOSED;
     }
-
+    void setPost(Post post) {
+        this.post = post;
+    }
 }

@@ -11,7 +11,7 @@ public class UserProfile {
     private String nickname;
     private String profile;
 
-    UserProfile(User user) {
+    public UserProfile(User user) {
         this.id = user.getId();
         this.nickname = user.getNickname();
         if (user.getProfileImage() != null) {

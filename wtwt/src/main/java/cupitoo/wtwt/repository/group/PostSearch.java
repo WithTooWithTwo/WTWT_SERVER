@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class PostSearch {
-    private OrderOption option; //정렬 옵션 [RECENT, POPULAR, SOON]
+    private OrderOption order; //정렬 옵션 [RECENT, POPULAR, SOON]
     private Category category; // 카테고리
     private Preference preference; //선호 동행인 Gender, minAge, maxAge
     private Boolean lightning;

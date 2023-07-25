@@ -48,7 +48,7 @@ public class PostController {
      */
     @GetMapping
     public List<PostListElement> findPosts(@RequestParam("category") @Nullable String category,
-                                           @RequestParam("order") @Nullable OrderOption option,
+                                           @RequestParam("order") @Nullable OrderOption order,
                                            @RequestParam("lightning") @Nullable Boolean lightning,
                                            @RequestParam("date") @Nullable String date,
                                            @ModelAttribute("preference") @Nullable PreferenceDto preference) {
@@ -56,15 +56,19 @@ public class PostController {
         PostSearch postSearch = new PostSearch();
         Category findCategory = categoryService.findOneByName(category);
         postSearch.setCategory(findCategory);
-        postSearch.setOption(option);
+        postSearch.setOrder(order);
         postSearch.setLightning(lightning);
-        postSearch.setPreference(Preference.builder()
-                        .headCount(preference.getPreferHeadCount())
-                        .minAge(preference.getMinAge())
-                        .maxAge(preference.getMaxAge())
-                        .gender(preference.getGender())
-                        .build());
-        postSearch.setDate(LocalDate.parse(date));
+        if(preference != null) {
+            postSearch.setPreference(Preference.builder()
+                    .headCount(preference.getPreferHeadCount())
+                    .minAge(preference.getMinAge())
+                    .maxAge(preference.getMaxAge())
+                    .gender(preference.getGender())
+                    .build());
+        }
+        if(date != null) {
+            postSearch.setDate(LocalDate.parse(date));
+        }
 
         return postService.findAllWithFilter(postSearch);
     }

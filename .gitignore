@@ -146,3 +146,5 @@ replay_pid*
 application.properties
 .DS_Store
 **/image/
+**/generated/
+InitDB.java

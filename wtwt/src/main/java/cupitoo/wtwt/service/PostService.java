@@ -3,9 +3,9 @@ package cupitoo.wtwt.service;
 import cupitoo.wtwt.controller.post.CreatePostReq;
 import cupitoo.wtwt.dto.PostDetails;
 import cupitoo.wtwt.dto.PostListElement;
+import cupitoo.wtwt.dto.UserProfile;
 import cupitoo.wtwt.model.Category;
 import cupitoo.wtwt.model.Group.*;
-import cupitoo.wtwt.model.Image;
 import cupitoo.wtwt.model.User.Gender;
 import cupitoo.wtwt.model.User.User;
 import cupitoo.wtwt.repository.*;
@@ -68,7 +68,6 @@ public class PostService {
                 .lastDay(LocalDate.parse(request.getLastDay(), DateTimeFormatter.ISO_DATE))
                 .lightning(request.getLightning().orElse(Boolean.FALSE))
                 .status(RecruitStatus.OPEN)
-                .post(post)
                 .category(category)
                 .preference(preference)
                 .leader(user)
@@ -80,12 +79,15 @@ public class PostService {
             groupUserRepository.save(groupUser);
         }
 
+        post.setGroup(group);
+
         return group.getId();
     }
 
     /**
      * 단일 게시글 조회
      */
+    @Transactional
     public PostDetails findPostWithGroup(Long postId) {
         Post post = postRepository.findById(postId).get();
         post.getImages(); //강제 초기화
@@ -101,8 +103,32 @@ public class PostService {
         return result;
     }
 
+    /**
+     * 게시글 검색 (리스트 조회)
+     */
     public List<PostListElement> findAllWithFilter(PostSearch postSearch) {
-        return postRepository.findAllWithFilter(postSearch);
+        List<Post> posts = postRepository.findAllWithFilter(postSearch);
+        List<PostListElement> result = new ArrayList<>();
+
+        for (Post p : posts) {
+            Group group = groupRepository.findByPost(p);
+            PostListElement e = PostListElement.builder()
+                            .id(p.getId())
+                            .writer(new UserProfile(p.getCreatedBy()))
+                            .createdAt(p.getCreatedAt())
+                            .title(p.getTitle())
+                            .content(p.getText())
+                            .isLightning(group.isLightning())
+                            .status(group.getStatus())
+                            .preferHeadCount(group.getPreference().getHeadCount())
+                            .headCount(group.getMembers().size())
+                            .hits(p.getHits())
+                    .build();
+
+            result.add(e);
+        }
+
+        return result;
     }
 
 }
