@@ -13,6 +13,8 @@ import cupitoo.wtwt.repository.group.GroupRepository;
 import cupitoo.wtwt.repository.review.*;
 import cupitoo.wtwt.util.FileStore;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -43,32 +46,34 @@ public class ReviewService {
         Group group = groupRepository.findById(groupId).get();
 
         validatePermission(user, group);
-
+        log.debug("ReceiverId: " + reviewDto.getReceiverId());
         User receiver = userRepository.findById(reviewDto.getReceiverId()).get();
         Review review = Review.builder()
                 .rete(reviewDto.getRete())
                 .receiver(receiver)
                 .group(group)
-                .comment(reviewDto.getComment().orElse(null))
+                .comment(reviewDto.getComment())
                 .build();
         reviewRepository.save(review);
 
         receiver.updateRate(reviewRepository.getAverageRateByReceiver(receiver));
 
-        for (Long id : reviewDto.getPersonalities().orElse(new ArrayList<>())) {
+        for (Long id : reviewDto.getPersonalities()) {
             PersonalityReview pr = new PersonalityReview(review, personalityRepository.findById(id).get());
             personalityReviewRepository.save(pr);
         }
 
-        for (Long id : reviewDto.getStyles().orElse(new ArrayList<>())) {
+        for (Long id : reviewDto.getStyles()) {
             StyleReview sr = new StyleReview(review, styleRepository.findById(id).get());
             styleReviewRepository.save(sr);
         }
 
-        List<Image> images = fileStore.storeFiles(reviewDto.getImages().orElse(new ArrayList<>()));
-        for (Image image : images) {
-            ReviewImage ri = new ReviewImage(review, image);
-            reviewImageRepository.save(ri);
+        if (reviewDto.getImages() != null) {
+            List<Image> images = fileStore.storeFiles(reviewDto.getImages());
+            for (Image image : images) {
+                ReviewImage ri = new ReviewImage(review, image);
+                reviewImageRepository.save(ri);
+            }
         }
 
         return review.getId();

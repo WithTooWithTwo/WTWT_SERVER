@@ -15,8 +15,8 @@ public class ReviewDto {
     private Integer rete;
     @NotNull
     private Long receiverId;
-    private Optional<List<Long>> personalities;
-    private Optional<List<Long>> styles;
-    private Optional<String> comment;
-    private Optional<List<MultipartFile>> images;
+    private List<Long> personalities;
+    private List<Long> styles;
+    private String comment;
+    private List<MultipartFile> images;
 }

@@ -30,7 +30,7 @@ public class ReviewController {
     @PostMapping("/{groupId}")
     public PostReviewRes postReviews(@Login Long sender,
                                   @PathVariable Long groupId,
-                                  @ModelAttribute PostReviewReq request) throws IOException, IllegalAccessException {
+                                  @RequestBody PostReviewReq request) throws IOException, IllegalAccessException {
 
         List<Long> result = new ArrayList<>();
         for (ReviewDto reviewDto : request.getReviews()) {
