@@ -1,15 +1,15 @@
 package cupitoo.wtwt.controller;
 
+import cupitoo.wtwt.annotation.Login;
+import cupitoo.wtwt.controller.login.LoginReq;
 import cupitoo.wtwt.dto.GroupDto;
+import cupitoo.wtwt.dto.GroupListElement;
 import cupitoo.wtwt.dto.UserProfile;
 import cupitoo.wtwt.service.GroupService;
 import cupitoo.wtwt.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,9 +26,34 @@ public class GroupController {
         GroupDto groupDto = groupService.findOne(id);
         return groupDto;
     }
-    // http://localhost:8080/groups/1/members
+
     @GetMapping("/{id}/members")
     public List<UserProfile> findGroupMember(@PathVariable("id") Long id) {
         return groupService.findMembers(id);
     }
+
+    @GetMapping
+    public List<GroupListElement> findMyGroups(@Login Long id) {
+        return groupService.findMyGroups(id);
+    }
+
+    @PatchMapping("/{id}/notice")
+    public PostResponse addNotice(@PathVariable("id") Long id,
+                                  @RequestParam("contents") String contents) {
+        return new PostResponse(groupService.addNotice(id, contents));
+    }
+
+    @PatchMapping("/{id}/memo")
+    public PostResponse addMemo(@PathVariable("id") Long id,
+                                  @RequestParam("contents") String contents) {
+        return new PostResponse(groupService.addMemo(id, contents));
+    }
+
+    @PatchMapping("/{id}/link")
+    public PostResponse addLink(@PathVariable("id") Long id,
+                                @RequestParam("link") String link,
+                                @RequestParam("description") String description) {
+        return new PostResponse(groupService.addLink(id, link, description));
+    }
+
 }

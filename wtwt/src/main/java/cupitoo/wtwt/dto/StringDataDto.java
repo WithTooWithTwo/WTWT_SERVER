@@ -1,10 +1,13 @@
 package cupitoo.wtwt.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import cupitoo.wtwt.model.group.GroupMemo;
 import cupitoo.wtwt.model.group.GroupNotice;
 
 public class StringDataDto {
+    @JsonProperty
     private Long id;
+    @JsonProperty
     private String data;
 
     public StringDataDto(GroupMemo memo) {

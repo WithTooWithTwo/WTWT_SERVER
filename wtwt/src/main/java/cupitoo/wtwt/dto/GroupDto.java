@@ -1,5 +1,6 @@
 package cupitoo.wtwt.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import cupitoo.wtwt.model.group.Group;
 import lombok.Data;
 

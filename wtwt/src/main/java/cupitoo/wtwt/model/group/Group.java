@@ -41,11 +41,11 @@ public class Group {
     private boolean lightning = false;
     @Embedded
     private Preference preference;
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<GroupNotice> notices = new ArrayList<>();
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<GroupLink> links = new ArrayList<>();
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<GroupMemo> memos = new ArrayList<>();
 
     //== 수정 메서드 ==//
