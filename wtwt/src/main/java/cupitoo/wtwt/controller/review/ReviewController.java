@@ -32,8 +32,10 @@ public class ReviewController {
                                   @PathVariable Long groupId,
                                   @RequestBody PostReviewReq request) throws IOException, IllegalAccessException {
 
+        log.debug("request: " + request.getReviews());
         List<Long> result = new ArrayList<>();
         for (ReviewDto reviewDto : request.getReviews()) {
+            log.debug("review From " + sender + " To " + reviewDto.getReceiverId());
             result.add(reviewService.createReview(sender, groupId, reviewDto));
         }
 

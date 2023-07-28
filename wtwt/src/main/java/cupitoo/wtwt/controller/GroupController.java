@@ -27,16 +27,22 @@ public class GroupController {
         return groupDto;
     }
 
+    /**
+     * 그룹 멤버 조회 for 리뷰
+     */
     @GetMapping("/{id}/members")
-    public List<UserProfile> findGroupMember(@PathVariable("id") Long id) {
-        return groupService.findMembers(id);
+    public List<UserProfile> findGroupMemberWithoutMe(@Login Long loginId, @PathVariable("id") Long id) {
+        return groupService.findMembersWithoutMe(loginId, id);
     }
 
     @GetMapping
-    public List<GroupListElement> findMyGroups(@Login Long id) {
+    public List<GroupDto> findMyGroups(@Login Long id) {
         return groupService.findMyGroups(id);
     }
 
+    /**
+     * 공지사항 추가
+     */
     @PatchMapping("/{id}/notice")
     public PostResponse addNotice(@PathVariable("id") Long id,
                                   @RequestParam("contents") String contents) {

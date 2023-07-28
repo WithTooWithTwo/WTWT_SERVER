@@ -25,7 +25,7 @@ public class Group {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User leader;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

@@ -1,9 +1,16 @@
 package cupitoo.wtwt.service;
 
+import cupitoo.wtwt.controller.user.GroupListElementsForUserInfo;
 import cupitoo.wtwt.controller.user.SignUpReq;
+import cupitoo.wtwt.dto.UserDto;
+import cupitoo.wtwt.dto.UserProfile;
 import cupitoo.wtwt.model.user.User;
 import cupitoo.wtwt.repository.UserRepository;
+import cupitoo.wtwt.repository.group.GroupRepository;
+import cupitoo.wtwt.repository.group.PostRepository;
+import cupitoo.wtwt.repository.review.ReviewRepository;
 import cupitoo.wtwt.util.FileStore;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,6 +25,9 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final GroupRepository groupRepository;
+    private final PostRepository postRepository;
+    private final ReviewRepository reviewRepository;
     private final FileStore fileStore;
 
     /**
@@ -34,7 +44,7 @@ public class UserService {
                 .gender(request.getGender())
                 .name(request.getName())
                 .phoneNumber(request.getPhoneNumber())
-                .status_message(request.getStatusMessage());
+                .statusMessage(request.getStatusMessage());
 
         if(request.getBYear() != null) {
             userBuilder.birthday(LocalDate.of(Integer.parseInt(request.getBYear()),
@@ -62,5 +72,29 @@ public class UserService {
             User findUser3 = userRepository.findByPhoneNumber(request.getPhoneNumber());
             if(findUser3 != null) throw new IllegalStateException("이미 존재하는 휴대폰 번호입니다.");
         }
+    }
+
+    public UserDto findOne(Long userId, @Nullable Boolean isMe) {
+        User user = userRepository.findById(userId).get();
+        UserDto.UserDtoBuilder userBuilder = UserDto.builder()
+                .id(user.getId())
+                .profileImage(new UserProfile(user))
+                .nickname(user.getNickname())
+                .rate(user.getRate())
+                .statusMessage(user.getStatusMessage())
+                .countsOfGroups(groupRepository.countGroupByUser(user))
+                .countsOfPosts(postRepository.countPostByUser(user))
+                .countsOfReviews(reviewRepository.countReviewByReceiver(user))
+//                .styles(reviewRepository.findStylesByUser(user))
+//                .personalities(reviewRepository.findPersonalitiesByUser(user))
+                .comments(reviewRepository.findCommentsByUser(user));
+
+        if(isMe == false) {
+            userBuilder.myGroups(groupRepository.findGroupsByUser(user)
+                    .stream()
+                    .map(g -> new GroupListElementsForUserInfo(g)).toList());
+        }
+
+        return userBuilder.build();
     }
 }

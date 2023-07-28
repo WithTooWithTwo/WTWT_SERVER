@@ -18,7 +18,6 @@ public class LoginController {
 
     @PostMapping("/login")
     public LoginRes login(HttpServletRequest servlet, @RequestBody LoginReq request) {
-
         Long loginUser = loginService.login(request.getEmail(), request.getPassword());
 
         //로그인 성공

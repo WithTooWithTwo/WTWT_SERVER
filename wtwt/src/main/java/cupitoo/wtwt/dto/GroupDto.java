@@ -14,7 +14,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @Data
 public class GroupDto {
     private Long id;
-    private int dday;
+    private Integer dday;
     private String image;
     private String name;
     private LocalDate firstDay;

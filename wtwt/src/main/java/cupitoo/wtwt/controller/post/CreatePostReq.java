@@ -1,5 +1,6 @@
 package cupitoo.wtwt.controller.post;
 
+import cupitoo.wtwt.dto.CategoryDto;
 import cupitoo.wtwt.model.user.Gender;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -26,7 +27,7 @@ public class CreatePostReq {
     private Optional<Boolean> lightning;
 
     // 선호 동행 정보
-    private Optional<Integer> preferHeadCount; // 원하는 동행 인원
+    private Integer preferHeadCount; // 원하는 동행 인원
     private Optional<Gender> preferGender;
     private Optional<Integer> preferMinAge;
     private Optional<Integer> preferMaxAge;

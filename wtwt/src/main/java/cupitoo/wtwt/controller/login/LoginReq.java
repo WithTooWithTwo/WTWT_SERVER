@@ -7,4 +7,3 @@ public class LoginReq {
     private String email;
     private String password;
 }
-

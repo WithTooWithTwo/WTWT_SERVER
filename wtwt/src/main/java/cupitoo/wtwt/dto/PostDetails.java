@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class PostDetails {
     private Long post_id;
     private String title;
-    private int hits;
+    private Integer hits;
     private LocalDateTime postDate;
     private UserProfile writer;
     private Boolean lightning;
@@ -28,6 +28,8 @@ public class PostDetails {
     //==============================
     private String content;
     List<String> images;
+
+    private CategoryDto category;
 
     public PostDetails(Post post, Group group, List<User> members) {
         this.post_id = post.getId();
@@ -47,5 +49,6 @@ public class PostDetails {
         this.images = post.getImages().stream()
                 .map(i -> i.getImage().getFileName())
                 .collect(Collectors.toList());
+        this.category = new CategoryDto(group.getCategory());
     }
 }

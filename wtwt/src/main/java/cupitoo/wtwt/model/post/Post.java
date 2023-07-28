@@ -30,7 +30,7 @@ public class Post extends BaseTimeEntity {
     @NotEmpty
     private String title;
     private String text;
-    private int hits; // 조회수
+    private Integer hits = 0; // 조회수
 
     //== 생성 메서드 ==//
     public Post(String title, String text, User createdBy) {

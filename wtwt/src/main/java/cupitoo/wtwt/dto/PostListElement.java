@@ -18,7 +18,7 @@ public class PostListElement {
     private String content;
     private Boolean isLightning;
     private RecruitStatus status;
-    private int preferHeadCount;
-    private int headCount;
-    private int hits;
+    private Integer preferHeadCount;
+    private Integer headCount;
+    private Integer hits;
 }

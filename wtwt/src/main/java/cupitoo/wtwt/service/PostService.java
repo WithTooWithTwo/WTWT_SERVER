@@ -7,7 +7,6 @@ import cupitoo.wtwt.dto.UserProfile;
 import cupitoo.wtwt.model.Category;
 import cupitoo.wtwt.model.Image;
 import cupitoo.wtwt.model.group.*;
-import cupitoo.wtwt.model.user.Gender;
 import cupitoo.wtwt.model.user.User;
 import cupitoo.wtwt.model.post.Post;
 import cupitoo.wtwt.model.post.PostImage;
@@ -24,6 +23,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -46,11 +46,12 @@ public class PostService {
     public Long save(Long userId, CreatePostReq request) {
         User user = userRepository.findById(userId).get();
 
+        Preference.PreferenceBuilder preferenceBuilder = Preference.builder();
         Preference preference = Preference.builder()
                 .maxAge(request.getPreferMaxAge().orElse(null))
-                .headCount(request.getPreferHeadCount().orElse(null))
-                .gender(request.getPreferGender().orElse(Gender.NONE))
                 .minAge(request.getPreferMinAge().orElse(null))
+                .headCount(request.getPreferHeadCount())
+                .gender(request.getPreferGender().orElse(null))
                 .build();
 
         Post post = new Post(request.getTitle(), request.getContent(), user);
@@ -87,8 +88,8 @@ public class PostService {
             group.changeGroupImage(postImages.get(0).getImage());
         }
 
-        for (String id : request.getMembers().orElse(new ArrayList<>())) {
-            GroupUser groupUser = new GroupUser(group, userRepository.findById(Long.parseLong(id)).get());
+        for (String nickname : request.getMembers().orElse(new ArrayList<>())) {
+            GroupUser groupUser = new GroupUser(group, userRepository.findByNickname(nickname));
             groupUserRepository.save(groupUser);
         }
 

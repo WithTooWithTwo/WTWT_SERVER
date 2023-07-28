@@ -35,24 +35,27 @@ public class GroupService {
         return new GroupDto(groupRepository.findById(groupId).get());
     }
 
-    public List<UserProfile> findMembers(Long groupId) {
+    public List<UserProfile> findMembersWithoutMe(Long loginId, Long groupId) {
         List<UserProfile> result = new ArrayList<>();
         Group group = groupRepository.findById(groupId).get();
         List<GroupUser> members = group.getMembers();
         User leader = group.getLeader();
-        result.add(new UserProfile(leader));
+        if(leader.getId() != loginId) {
+            result.add(new UserProfile(leader));
+        }
 
         for (GroupUser member: members) {
+            if(member.getId() == loginId) continue;
             result.add(new UserProfile(member.getUser()));
         }
 
         return result;
     }
 
-    public List<GroupListElement> findMyGroups(Long userId) {
+    public List<GroupDto> findMyGroups(Long userId) {
         User user = userRepository.findById(userId).get();
         return groupRepository.findAllByLeader(user).stream()
-                .map(g -> new GroupListElement(g))
+                .map(g -> new GroupDto(g))
                 .collect(Collectors.toList());
     }
 

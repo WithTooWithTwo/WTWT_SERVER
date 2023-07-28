@@ -4,6 +4,7 @@ import cupitoo.wtwt.model.user.Gender;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Embeddable
@@ -14,7 +15,8 @@ import lombok.*;
 public class Preference {
     @Enumerated(EnumType.STRING)
     private Gender gender; //성별 [MALE, FEMALE, NONE]
-    private int headCount;
-    private int minAge;
-    private int maxAge;
+    @NotNull
+    private Integer headCount;
+    private Integer minAge;
+    private Integer maxAge;
 }

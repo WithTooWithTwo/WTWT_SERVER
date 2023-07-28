@@ -28,7 +28,7 @@ public class User {
     @NotEmpty
     private String email;
     private Float rate = 0f; //별점 평균
-    private String status_message;
+    private String statusMessage;
     private String name;
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
