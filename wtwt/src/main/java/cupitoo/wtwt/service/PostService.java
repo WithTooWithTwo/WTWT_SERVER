@@ -5,6 +5,7 @@ import cupitoo.wtwt.dto.PostDetails;
 import cupitoo.wtwt.dto.PostListElement;
 import cupitoo.wtwt.dto.UserProfile;
 import cupitoo.wtwt.model.Category;
+import cupitoo.wtwt.model.Image;
 import cupitoo.wtwt.model.group.*;
 import cupitoo.wtwt.model.user.Gender;
 import cupitoo.wtwt.model.user.User;
@@ -14,6 +15,7 @@ import cupitoo.wtwt.repository.*;
 import cupitoo.wtwt.repository.group.*;
 import cupitoo.wtwt.util.FileStore;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -55,8 +58,11 @@ public class PostService {
 
         request.getImages().ifPresent(images -> {
             try {
-                fileStore.storeFiles(images).stream()
-                        .map(i -> postImageRepository.save(new PostImage(post, i)));
+                List<Image> imageList = fileStore.storeFiles(images);
+                for (Image i: imageList) {
+                    postImageRepository.save(new PostImage(post, i));
+                }
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -75,6 +81,11 @@ public class PostService {
                 .leader(user)
                 .build();
         groupRepository.save(group);
+
+        List<PostImage> postImages = postImageRepository.findByPost(post);
+        if(postImages.size() != 0) {
+            group.changeGroupImage(postImages.get(0).getImage());
+        }
 
         for (String id : request.getMembers().orElse(new ArrayList<>())) {
             GroupUser groupUser = new GroupUser(group, userRepository.findById(Long.parseLong(id)).get());

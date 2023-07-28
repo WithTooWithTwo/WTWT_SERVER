@@ -70,4 +70,5 @@ public class Group {
     public void setPost(Post post) {
         this.post = post;
     }
+    public void changeGroupImage(Image image) { this.groupImage = image; }
 }
