@@ -1,15 +1,11 @@
 package cupitoo.wtwt.controller.review;
 
 import cupitoo.wtwt.annotation.Login;
-import cupitoo.wtwt.controller.ErrorResponse;
-import cupitoo.wtwt.service.PersonalityService;
+import cupitoo.wtwt.controller.Error;
 import cupitoo.wtwt.service.ReviewService;
-import cupitoo.wtwt.service.StyleService;
-import cupitoo.wtwt.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -52,9 +48,7 @@ public class ReviewController {
      * 예외 핸들러
      */
     @ExceptionHandler(IllegalAccessException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleIllegalAccessException(IllegalAccessException ex) {
-        ErrorResponse response = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    public Error handleIllegalAccessException(IllegalAccessException e) {
+        return new Error(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 }

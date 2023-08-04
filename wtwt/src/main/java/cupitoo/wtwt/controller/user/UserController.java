@@ -1,6 +1,7 @@
 package cupitoo.wtwt.controller.user;
 
 import cupitoo.wtwt.annotation.Login;
+import cupitoo.wtwt.controller.Error;
 import cupitoo.wtwt.dto.UserDto;
 import cupitoo.wtwt.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -33,4 +34,5 @@ public class UserController {
     public UserDto findUser(@PathVariable("id") Long userId) throws IOException {
         return userService.findOne(userId, false);
     }
+
 }
