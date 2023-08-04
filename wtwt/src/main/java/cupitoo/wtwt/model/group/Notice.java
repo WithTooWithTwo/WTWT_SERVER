@@ -17,4 +17,7 @@ public class Notice {
     public Notice(String contents) {
         this.contents = contents;
     }
+    public void changeContents(String contents) {
+        this.contents = contents;
+    }
 }
