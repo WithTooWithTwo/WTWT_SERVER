@@ -1,9 +1,7 @@
 package cupitoo.wtwt.controller;
 
 import cupitoo.wtwt.annotation.Login;
-import cupitoo.wtwt.controller.login.LoginReq;
 import cupitoo.wtwt.dto.GroupDto;
-import cupitoo.wtwt.dto.GroupListElement;
 import cupitoo.wtwt.dto.UserProfile;
 import cupitoo.wtwt.service.GroupService;
 import cupitoo.wtwt.util.FileStore;
@@ -28,16 +26,16 @@ public class GroupController {
     }
 
     /**
-     * 그룹 멤버 조회 for 리뷰
+     * 그룹 멤버
      */
-    @GetMapping("/{id}/members")
-    public List<UserProfile> findGroupMemberWithoutMe(@Login Long loginId, @PathVariable("id") Long id) {
-        return groupService.findMembersWithoutMe(loginId, id);
-    }
-
     @GetMapping
     public List<GroupDto> findMyGroups(@Login Long id) {
         return groupService.findMyGroups(id);
+    }
+
+    @GetMapping("/{id}/members")
+    public List<UserProfile> findGroupMemberWithoutMe(@Login Long loginId, @PathVariable("id") Long groupId) {
+        return groupService.findMembersWithoutMe(loginId, groupId);
     }
 
     @PatchMapping("/{id}/member")
@@ -53,21 +51,40 @@ public class GroupController {
     }
 
     /**
-     * 공지사항 추가
+     * 공지사항
      */
-    @PatchMapping("/{id}/notice")
-    public PostResponse addNotice(@PathVariable("id") Long id,
+    @PostMapping("/{id}/notice")
+    public PostResponse addNotice(@PathVariable("id") Long groupId,
                                   @RequestParam("contents") String contents) {
-        return new PostResponse(groupService.addNotice(id, contents));
+        return new PostResponse(groupService.addNotice(groupId, contents));
     }
 
-    @PatchMapping("/{id}/memo")
+    @PatchMapping("/{id}/notice/{noticeId}")
+    public PostResponse editNotice(@PathVariable("id") Long groupId,
+                                   @PathVariable("noticeId") Long noticeId,
+                                  @RequestParam("contents") String contents) {
+        return new PostResponse(groupService.editNotice(groupId, noticeId, contents));
+    }
+
+    @DeleteMapping("/{id}/notice/{noticeId}")
+    public PostResponse editNotice(@PathVariable("id") Long groupId,
+                                   @PathVariable("noticeId") Long noticeId) {
+        return new PostResponse(200L);
+    }
+
+    /**
+     * 메모
+     */
+    @PostMapping("/{id}/memo")
     public PostResponse addMemo(@PathVariable("id") Long id,
                                   @RequestParam("contents") String contents) {
         return new PostResponse(groupService.addMemo(id, contents));
     }
 
-    @PatchMapping("/{id}/link")
+    /**
+     * 링크
+     */
+    @PostMapping("/{id}/link")
     public PostResponse addLink(@PathVariable("id") Long id,
                                 @RequestParam("link") String link,
                                 @RequestParam("description") String description) {

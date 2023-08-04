@@ -61,6 +61,12 @@ public class Group {
     public void addNotice(GroupNotice notice) {
         this.notices.add(notice);
     }
+    public void removeNotice(GroupNotice gn) {
+        for(int i = 0; i < notices.size() - 1; ++i) {
+            GroupNotice notice = notices.get(i);
+            if(gn == notice) notices.remove(i);
+        }
+    }
     public void addLink(GroupLink link) {
         this.links.add(link);
     }

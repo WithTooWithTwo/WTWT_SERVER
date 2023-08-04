@@ -40,15 +40,24 @@ public class GroupDto {
                     .map(m -> new UserProfile(m.getUser()))
                     .collect(Collectors.toList());
         }
-        this.notices = group.getNotices().stream()
-                .map(i -> new StringDataDto(i))
-                .collect(Collectors.toList());
-        this.places = group.getLinks().stream()
-                .map(i -> new HyperlinkDto(i))
-                .collect(Collectors.toList());
-        this.memos = group.getMemos().stream()
-                .map(i -> new StringDataDto(i))
-                .collect(Collectors.toList());
+
+        if(group.getNotices().size() > 0) {
+            this.notices = group.getNotices().stream()
+                    .map(i -> new StringDataDto(i))
+                    .collect(Collectors.toList());
+        }
+
+        if(group.getLinks().size() > 0) {
+            this.places = group.getLinks().stream()
+                    .map(i -> new HyperlinkDto(i))
+                    .collect(Collectors.toList());
+        }
+
+        if(group.getMemos().size() > 0) {
+            this.memos = group.getMemos().stream()
+                    .map(i -> new StringDataDto(i))
+                    .collect(Collectors.toList());
+        }
     }
 
     private int getDday(LocalDate toDate) {

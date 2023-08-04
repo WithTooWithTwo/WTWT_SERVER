@@ -17,8 +17,8 @@ public class GroupNotice {
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "motice_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "notice_id")
     private Notice notice;
 
     public GroupNotice(Group group, Notice notice) {

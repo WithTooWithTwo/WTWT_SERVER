@@ -21,6 +21,7 @@ public class GroupService {
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
     private final GroupUserRepository groupUserRepository;
+    private final GroupNoticeRepository groupNoticeRepository;
     private final NoticeRepository noticeRepository;
     private final MemoRepository memoRepository;
     private final HyperlinkRepository hyperlinkRepository;
@@ -58,7 +59,7 @@ public class GroupService {
     }
 
     /**
-     * 공지 추가
+     * 공지
      */
     @Transactional
     public Long addNotice(Long id, String contents) {
@@ -70,6 +71,22 @@ public class GroupService {
         group.addNotice(gn);
 
         return group.getId();
+    }
+
+    @Transactional
+    public Long editNotice(Long groupId, Long noticeId,String contents) {
+        Group group = groupRepository.findById(groupId).get();
+        Notice notice = noticeRepository.findById(noticeId).get();
+        notice.changeContents(contents);
+        return noticeId;
+    }
+
+    @Transactional
+    public void removeNotice(Long groupId, Long noticeId) {
+        Group group = groupRepository.findById(groupId).get();
+        GroupNotice gn = groupNoticeRepository.findById(noticeId).get();
+        group.removeNotice(gn);
+        groupNoticeRepository.delete(gn);
     }
 
     @Transactional
@@ -94,6 +111,9 @@ public class GroupService {
         return group.getId();
     }
 
+    /**
+     * 멤버
+     */
     @Transactional
     public Long addMember(Long groupId, String nickname) {
         Group group = groupRepository.findById(groupId).get();
