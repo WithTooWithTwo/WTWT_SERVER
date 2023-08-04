@@ -40,6 +40,18 @@ public class GroupController {
         return groupService.findMyGroups(id);
     }
 
+    @PatchMapping("/{id}/member")
+    public PostResponse addMember(@PathVariable("id") Long groupId,
+                                    @RequestParam("nickname") String nickname) {
+        return new PostResponse(groupService.addMember(groupId, nickname));
+    }
+    @DeleteMapping ("/{id}/member")
+    public PostResponse deleteMember(@PathVariable("id") Long groupId,
+                                  @RequestParam("member") Long memberId) {
+        groupService.deleteMember(groupId, memberId);
+        return new PostResponse(200L);
+    }
+
     /**
      * 공지사항 추가
      */

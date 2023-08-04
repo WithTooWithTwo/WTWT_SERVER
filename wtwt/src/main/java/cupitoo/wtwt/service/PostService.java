@@ -44,7 +44,6 @@ public class PostService {
     public Long save(Long userId, CreatePostReq request) {
         User user = userRepository.findById(userId).get();
 
-        Preference.PreferenceBuilder preferenceBuilder = Preference.builder();
         Preference preference = Preference.builder()
                 .maxAge(request.getPreferMaxAge())
                 .minAge(request.getPreferMinAge())
@@ -90,8 +89,13 @@ public class PostService {
         List<String> members = request.getMembers();
         if(members.size() > 0) {
             for (String nickname : members) {
+                log.info("nickname: " + nickname);
                 User member = userRepository.findByNickname(nickname);
-                if(member != null && member != user) {
+                if(member == null) throw new IllegalArgumentException("존재하지 않는 유저를 그룹 멤버로 설정하였습니다.");
+                if(groupUserRepository.findGroupUserByGroupAndUser(group, member) != null) {
+                    throw new IllegalArgumentException("중복된 회원을 추가하였습니다.");
+                }
+                if(member != user) {
                     GroupUser groupUser = new GroupUser(group, member);
                     groupUserRepository.save(groupUser);
                 }

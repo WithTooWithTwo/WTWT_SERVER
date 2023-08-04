@@ -49,8 +49,14 @@ public class Group {
     private List<GroupMemo> memos = new ArrayList<>();
 
     //== 수정 메서드 ==//
-    public void addMember(User user) {
-        this.members.add(new GroupUser(this, user));
+    public void addMember(GroupUser member) {
+        this.members.add(member);
+    }
+    public void removeMember(GroupUser member) {
+        for(int i = 0; i < members.size() - 1; ++i) {
+            GroupUser gu = members.get(i);
+           if(gu == member) members.remove(i);
+        }
     }
     public void addNotice(GroupNotice notice) {
         this.notices.add(notice);

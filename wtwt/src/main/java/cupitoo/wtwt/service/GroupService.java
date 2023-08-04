@@ -6,10 +6,7 @@ import cupitoo.wtwt.dto.UserProfile;
 import cupitoo.wtwt.model.group.*;
 import cupitoo.wtwt.model.user.User;
 import cupitoo.wtwt.repository.UserRepository;
-import cupitoo.wtwt.repository.group.GroupRepository;
-import cupitoo.wtwt.repository.group.HyperlinkRepository;
-import cupitoo.wtwt.repository.group.MemoRepository;
-import cupitoo.wtwt.repository.group.NoticeRepository;
+import cupitoo.wtwt.repository.group.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +20,7 @@ import java.util.stream.Collectors;
 public class GroupService {
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
+    private final GroupUserRepository groupUserRepository;
     private final NoticeRepository noticeRepository;
     private final MemoRepository memoRepository;
     private final HyperlinkRepository hyperlinkRepository;
@@ -94,5 +92,28 @@ public class GroupService {
         GroupLink gl = new GroupLink(group, hyperlink);
         group.addLink(gl);
         return group.getId();
+    }
+
+    @Transactional
+    public Long addMember(Long groupId, String nickname) {
+        Group group = groupRepository.findById(groupId).get();
+        User member = userRepository.findByNickname(nickname);
+        if(member == null) throw new IllegalArgumentException("존재하지 않는 유저입니다.");
+        if(groupUserRepository.findGroupUserByGroupAndUser(group, member) != null) {
+            throw new IllegalArgumentException("이미 그룹에 추가된 유저입니다.");
+        }
+        GroupUser groupUser = new GroupUser(group, member);
+        groupUserRepository.save(groupUser);
+        group.addMember(groupUser);
+        return member.getId();
+    }
+
+    @Transactional
+    public void deleteMember(Long groupId, Long memberId) {
+        Group group = groupRepository.findById(groupId).get();
+        User member = userRepository.findById(memberId).get();
+        GroupUser gu = groupUserRepository.findGroupUserByGroupAndUser(group, member);
+        group.removeMember(gu);
+        groupUserRepository.delete(gu);
     }
 }
