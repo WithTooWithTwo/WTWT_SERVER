@@ -28,8 +28,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "/", "/users", "/login", "/error", "/image/**"
                 );
 
-        registry.addInterceptor(new RequestLogInterceptor())
-                .order(1) //인터셉터 체인에서 몇번째로?
-                .addPathPatterns("/**"); //인터셉터 적용경로
+//        registry.addInterceptor(new RequestLogInterceptor())
+//                .order(1) //인터셉터 체인에서 몇번째로?
+//                .addPathPatterns("/**"); //인터셉터 적용경로
     }
 }
