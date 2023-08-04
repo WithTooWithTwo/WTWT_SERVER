@@ -1,9 +1,7 @@
 package cupitoo.wtwt.service;
 
 import cupitoo.wtwt.controller.post.CreatePostReq;
-import cupitoo.wtwt.dto.PostDetails;
-import cupitoo.wtwt.dto.PostListElement;
-import cupitoo.wtwt.dto.UserProfile;
+import cupitoo.wtwt.dto.*;
 import cupitoo.wtwt.model.Category;
 import cupitoo.wtwt.model.Image;
 import cupitoo.wtwt.model.group.*;
@@ -92,8 +90,11 @@ public class PostService {
         List<String> members = request.getMembers();
         if(members.size() > 0) {
             for (String nickname : members) {
-                GroupUser groupUser = new GroupUser(group, userRepository.findByNickname(nickname));
-                groupUserRepository.save(groupUser);
+                User member = userRepository.findByNickname(nickname);
+                if(member != null && member != user) {
+                    GroupUser groupUser = new GroupUser(group, member);
+                    groupUserRepository.save(groupUser);
+                }
             }
         }
 
@@ -109,7 +110,7 @@ public class PostService {
     public PostDetails findPostWithGroup(Long postId) {
         Post post = postRepository.findById(postId).get();
         post.getImages(); //강제 초기화
-        post.getCreatedBy().getProfileImage(); //강제 초기화
+        post.getCreatedBy().getId(); //강제 초기화
         post.updateHit();
 
         Group group = groupRepository.findByPost(post);
@@ -117,8 +118,7 @@ public class PostService {
                 .map(m -> m.getUser())
                 .collect(Collectors.toList());
 
-        PostDetails result = new PostDetails(post, group, members);
-        return result;
+        return new PostDetails(post, group, members);
     }
 
     /**

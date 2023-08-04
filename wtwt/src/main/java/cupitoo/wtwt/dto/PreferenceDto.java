@@ -14,7 +14,7 @@ public class PreferenceDto {
     private Integer preferHeadCount;
 
     public PreferenceDto() {}
-    PreferenceDto(Preference preference) {
+    public PreferenceDto(Preference preference) {
         this();
         if(preference != null) {
             this.gender = preference.getGender();

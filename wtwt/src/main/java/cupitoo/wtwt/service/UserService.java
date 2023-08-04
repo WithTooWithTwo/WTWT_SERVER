@@ -46,6 +46,7 @@ public class UserService {
                 .phoneNumber(request.getPhoneNumber())
                 .statusMessage(request.getStatusMessage());
 
+        log.debug("request.getBYear() = " + request.getBYear().getClass());
         if(request.getBYear() != null) {
             userBuilder.birthday(LocalDate.of(Integer.parseInt(request.getBYear()),
                     Integer.parseInt(request.getBMonth()),
@@ -54,6 +55,7 @@ public class UserService {
             );
         }
 
+        log.debug("request.getProfileImage() = " + request.getProfileImage().getClass());
         if(request.getProfileImage() != null) {
             userBuilder.profileImage(fileStore.storeFile(request.getProfileImage()));
         }
@@ -63,9 +65,9 @@ public class UserService {
 
     private void validateDuplicateUser(SignUpReq request) {
         User findUser1 = userRepository.findByNickname(request.getNickname());
-        if(findUser1 != null) throw new IllegalStateException("이미 존재하는 이메일입니다.");
+        if(findUser1 != null) throw new IllegalStateException("이미 존재하는 닉네임입니다.");
 
-        User findUser2 = userRepository.findByNickname(request.getEmail());
+        User findUser2 = userRepository.findByEmail(request.getEmail());
         if(findUser2 != null) throw new IllegalStateException("이미 존재하는 이메일입니다.");
 
         if(request.getPhoneNumber() != null) {

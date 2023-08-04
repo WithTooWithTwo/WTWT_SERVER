@@ -3,6 +3,8 @@ package cupitoo.wtwt.dto;
 import cupitoo.wtwt.model.group.Group;
 import cupitoo.wtwt.model.post.Post;
 import cupitoo.wtwt.model.user.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -40,7 +42,6 @@ public class PostDetails {
         this.lightning = group.isLightning();
         this.firstDay = group.getFirstDay();
         this.lastDay = group.getLastDay();
-        // this.tags = group.getTegs();
         this.members = members.stream()
                 .map(m -> new UserProfile(m))
                 .collect(Collectors.toList());

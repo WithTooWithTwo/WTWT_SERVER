@@ -19,6 +19,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public Error AllExceptionHandler(Exception e) {
         log.error(e.getMessage());
+        e.printStackTrace();
         return new Error(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 }
