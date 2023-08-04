@@ -9,5 +9,5 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class ReviewOptionList {
-    List<OptionDto> options = new ArrayList<>();
+    List<OptionDto> options;
 }

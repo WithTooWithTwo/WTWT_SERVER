@@ -17,13 +17,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -48,16 +48,17 @@ public class PostService {
 
         Preference.PreferenceBuilder preferenceBuilder = Preference.builder();
         Preference preference = Preference.builder()
-                .maxAge(request.getPreferMaxAge().orElse(null))
-                .minAge(request.getPreferMinAge().orElse(null))
+                .maxAge(request.getPreferMaxAge())
+                .minAge(request.getPreferMinAge())
                 .headCount(request.getPreferHeadCount())
-                .gender(request.getPreferGender().orElse(null))
+                .gender(request.getPreferGender())
                 .build();
 
         Post post = new Post(request.getTitle(), request.getContent(), user);
         postRepository.save(post);
 
-        request.getImages().ifPresent(images -> {
+        List<MultipartFile> images = request.getImages();
+        if(images.size() > 0) {
             try {
                 List<Image> imageList = fileStore.storeFiles(images);
                 for (Image i: imageList) {
@@ -67,7 +68,7 @@ public class PostService {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        });
+        }
 
         Category category = categoryRepository.findById(request.getCategory_id()).get();
 
@@ -75,7 +76,7 @@ public class PostService {
                 .groupName(request.getTitle())
                 .firstDay(LocalDate.parse(request.getFirstDay(), DateTimeFormatter.ISO_DATE))
                 .lastDay(LocalDate.parse(request.getLastDay(), DateTimeFormatter.ISO_DATE))
-                .lightning(request.getLightning().orElse(Boolean.FALSE))
+                .lightning(request.getLightning())
                 .status(RecruitStatus.OPEN)
                 .category(category)
                 .preference(preference)
@@ -88,9 +89,12 @@ public class PostService {
             group.changeGroupImage(postImages.get(0).getImage());
         }
 
-        for (String nickname : request.getMembers().orElse(new ArrayList<>())) {
-            GroupUser groupUser = new GroupUser(group, userRepository.findByNickname(nickname));
-            groupUserRepository.save(groupUser);
+        List<String> members = request.getMembers();
+        if(members.size() > 0) {
+            for (String nickname : members) {
+                GroupUser groupUser = new GroupUser(group, userRepository.findByNickname(nickname));
+                groupUserRepository.save(groupUser);
+            }
         }
 
         post.setGroup(group);
