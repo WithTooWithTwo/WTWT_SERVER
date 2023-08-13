@@ -49,7 +49,7 @@ public class ReviewService {
         log.debug("ReceiverId: " + reviewDto.getReceiverId());
         User receiver = userRepository.findById(reviewDto.getReceiverId()).get();
         Review review = Review.builder()
-                .rete(reviewDto.getRete())
+                .rate(reviewDto.getRate())
                 .receiver(receiver)
                 .group(group)
                 .comment(reviewDto.getComment())

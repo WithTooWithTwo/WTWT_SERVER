@@ -143,7 +143,7 @@ public class PostService {
                             .isLightning(group.isLightning())
                             .status(group.getStatus())
                             .preferHeadCount(group.getPreference().getHeadCount())
-                            .headCount(group.getMembers().size())
+                            .headCount(group.getMembers().size() + 1)
                             .hits(p.getHits())
                     .build();
 

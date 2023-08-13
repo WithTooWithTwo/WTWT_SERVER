@@ -25,14 +25,14 @@ public class GroupController {
         return groupDto;
     }
 
-    /**
-     * 그룹 멤버
-     */
     @GetMapping
     public List<GroupDto> findMyGroups(@Login Long id) {
         return groupService.findMyGroups(id);
     }
 
+    /**
+     * 그룹 멤버
+     */
     @GetMapping("/{id}/members")
     public List<UserProfile> findGroupMemberWithoutMe(@Login Long loginId, @PathVariable("id") Long groupId) {
         return groupService.findMembersWithoutMe(loginId, groupId);

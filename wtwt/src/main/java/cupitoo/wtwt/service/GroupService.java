@@ -8,6 +8,7 @@ import cupitoo.wtwt.model.user.User;
 import cupitoo.wtwt.repository.UserRepository;
 import cupitoo.wtwt.repository.group.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GroupService {
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
@@ -30,8 +32,15 @@ public class GroupService {
      * 그룹 조회
      */
     public GroupDto findOne(Long groupId) {
-        Group group = groupRepository.findById(groupId).get();
         return new GroupDto(groupRepository.findById(groupId).get());
+    }
+
+    public List<GroupDto> findMyGroups(Long userId) {
+        User user = userRepository.findById(userId).get();
+        return groupRepository.findIdsByUser(user)
+                .stream()
+                .map(g -> new GroupDto(g))
+                .collect(Collectors.toList());
     }
 
     public List<UserProfile> findMembersWithoutMe(Long loginId, Long groupId) {
@@ -43,19 +52,12 @@ public class GroupService {
             result.add(new UserProfile(leader));
         }
 
-        for (GroupUser member: members) {
-            if(member.getId() == loginId) continue;
+        for(GroupUser member: members) {
+            if(member.getUser().getId() == loginId) continue;
             result.add(new UserProfile(member.getUser()));
         }
 
         return result;
-    }
-
-    public List<GroupDto> findMyGroups(Long userId) {
-        User user = userRepository.findById(userId).get();
-        return groupRepository.findAllByLeader(user).stream()
-                .map(g -> new GroupDto(g))
-                .collect(Collectors.toList());
     }
 
     /**

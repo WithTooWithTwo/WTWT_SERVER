@@ -21,7 +21,7 @@ public class ReviewController {
 
 
     /**
-     * 그룹에서 리뷰하기 -> 리뷰 당한 사람의 rete update!
+     * 그룹에서 리뷰하기 -> 리뷰 당한 사람의 rate update!
      */
     @PostMapping("/{groupId}")
     public PostReviewRes postReviews(@Login Long sender,

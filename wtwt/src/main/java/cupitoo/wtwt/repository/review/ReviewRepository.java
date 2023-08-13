@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    @Query("SELECT AVG(r.rete) FROM Review r WHERE r.receiver = :user")
+    @Query("SELECT AVG(r.rate) FROM Review r WHERE r.receiver = :user")
     Float getAverageRateByReceiver(@Param("user") User user);
 
     int countReviewByReceiver(User user);

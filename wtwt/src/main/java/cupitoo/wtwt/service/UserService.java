@@ -92,9 +92,10 @@ public class UserService {
                 .comments(reviewRepository.findCommentsByUser(user));
 
         if(isMe == false) {
-            userBuilder.myGroups(groupRepository.findGroupsByUser(user)
+            userBuilder.myGroups(groupRepository.findIdsByUser(user)
                     .stream()
-                    .map(g -> new GroupListElementsForUserInfo(g)).toList());
+                    .map(g -> new GroupListElementsForUserInfo(g))
+                    .toList());
         }
 
         return userBuilder.build();

@@ -16,7 +16,7 @@ public class Review {
     @Column(name = "review_id")
     private Long id;
     @Range(min = 0, max = 5) //별점은 0 - 5 사이의 정수
-    private Integer rete;
+    private Integer rate;
     private String comment;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

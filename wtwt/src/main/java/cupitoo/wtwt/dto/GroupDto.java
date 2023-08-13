@@ -3,6 +3,7 @@ package cupitoo.wtwt.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cupitoo.wtwt.model.group.Group;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 @Data
+@Slf4j
 public class GroupDto {
     private Long id;
     private Integer dday;
