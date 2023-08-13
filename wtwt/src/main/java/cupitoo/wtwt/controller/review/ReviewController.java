@@ -26,7 +26,7 @@ public class ReviewController {
     @PostMapping("/{groupId}")
     public PostReviewRes postReviews(@Login Long sender,
                                   @PathVariable Long groupId,
-                                  @RequestBody PostReviewReq request) throws IOException, IllegalAccessException {
+                                  @ModelAttribute PostReviewReq request) throws IOException, IllegalAccessException {
 
         log.debug("request: " + request.getReviews());
         List<Long> result = new ArrayList<>();

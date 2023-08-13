@@ -4,7 +4,6 @@ import cupitoo.wtwt.annotation.Login;
 import cupitoo.wtwt.dto.GroupDto;
 import cupitoo.wtwt.dto.UserProfile;
 import cupitoo.wtwt.service.GroupService;
-import cupitoo.wtwt.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequestMapping("/groups")
 public class GroupController {
     private final GroupService groupService;
-    private final FileStore fileStore;
 
     @GetMapping("/{id}")
     public GroupDto findGroup(@PathVariable("id") Long id) {

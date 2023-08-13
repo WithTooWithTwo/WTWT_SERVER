@@ -48,7 +48,7 @@ public class PostDetails {
         this.preference = new PreferenceDto(group.getPreference());
         this.content = post.getText();
         this.images = post.getImages().stream()
-                .map(i -> i.getImage().getFileName())
+                .map(i -> i.getImage().getUrl())
                 .collect(Collectors.toList());
         this.category = new CategoryDto(group.getCategory());
     }

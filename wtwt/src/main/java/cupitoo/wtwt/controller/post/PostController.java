@@ -12,7 +12,7 @@ import cupitoo.wtwt.repository.group.PostSearch;
 import cupitoo.wtwt.service.CategoryService;
 import cupitoo.wtwt.service.PostService;
 import cupitoo.wtwt.service.UserService;
-import cupitoo.wtwt.util.FileStore;
+import cupitoo.wtwt.service.S3Service;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class PostController {
     private final PostService postService;
     private final CategoryService categoryService;
     private final UserService userService;
-    private final FileStore fileStore;
+    private final S3Service s3Service;
 
     /**
      * 게시글 작성 -> 그룹 자동 생성

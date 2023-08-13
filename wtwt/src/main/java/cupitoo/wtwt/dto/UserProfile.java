@@ -13,7 +13,7 @@ public class UserProfile {
         this.id = user.getId();
         this.nickname = user.getNickname();
         if (user.getProfileImage() != null) {
-            this.profile = user.getProfileImage().getFileName();
+            this.profile = user.getProfileImage().getUrl();
         } else this.profile = null;
     }
 }

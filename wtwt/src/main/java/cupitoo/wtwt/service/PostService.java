@@ -10,14 +10,12 @@ import cupitoo.wtwt.model.post.Post;
 import cupitoo.wtwt.model.post.PostImage;
 import cupitoo.wtwt.repository.*;
 import cupitoo.wtwt.repository.group.*;
-import cupitoo.wtwt.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -35,7 +33,7 @@ public class PostService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final GroupUserRepository groupUserRepository;
-    private final FileStore fileStore;
+    private final S3Service s3Service;
 
     /**
      * 게시글 생성
@@ -56,15 +54,11 @@ public class PostService {
 
         List<MultipartFile> images = request.getImages();
         if(images.size() > 0) {
-            try {
-                List<Image> imageList = fileStore.storeFiles(images);
-                for (Image i: imageList) {
-                    postImageRepository.save(new PostImage(post, i));
-                }
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            List<Image> imageList = s3Service.uploadImageList(images);
+            for (Image i: imageList) {
+                postImageRepository.save(new PostImage(post, i));
             }
+
         }
 
         Category category = categoryRepository.findById(request.getCategory_id()).get();

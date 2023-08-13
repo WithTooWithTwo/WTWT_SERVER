@@ -10,12 +10,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Image {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
     private Long id;
+
     @NotEmpty
-    private String fileName;
-    public Image(String fileName) {
-        this.fileName = fileName;
+    private String url;
+    public Image(String url) {
+        this.url = url;
     }
 }

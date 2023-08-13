@@ -21,7 +21,7 @@ public class GroupListElement {
         this.id = group.getId();
         this.dday = getDday(group.getFirstDay());
         if(group.getGroupImage() != null) {
-            this.image = group.getGroupImage().getFileName();
+            this.image = group.getGroupImage().getUrl();
         }
         this.name = group.getGroupName();
         this.firstDay = group.getFirstDay();

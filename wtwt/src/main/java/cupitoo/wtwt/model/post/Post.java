@@ -1,8 +1,8 @@
 package cupitoo.wtwt.model.post;
 
 import cupitoo.wtwt.model.BaseTimeEntity;
-import cupitoo.wtwt.model.group.Group;
 import cupitoo.wtwt.model.Image;
+import cupitoo.wtwt.model.group.Group;
 import cupitoo.wtwt.model.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;

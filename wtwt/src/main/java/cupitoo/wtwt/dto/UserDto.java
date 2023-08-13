@@ -1,17 +1,11 @@
 package cupitoo.wtwt.dto;
 
 import cupitoo.wtwt.controller.user.GroupListElementsForUserInfo;
-import cupitoo.wtwt.model.Image;
-import cupitoo.wtwt.model.group.Group;
-import cupitoo.wtwt.model.review.Personality;
-import cupitoo.wtwt.model.review.Style;
-import cupitoo.wtwt.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor

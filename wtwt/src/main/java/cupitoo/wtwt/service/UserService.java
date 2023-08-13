@@ -9,7 +9,6 @@ import cupitoo.wtwt.repository.UserRepository;
 import cupitoo.wtwt.repository.group.GroupRepository;
 import cupitoo.wtwt.repository.group.PostRepository;
 import cupitoo.wtwt.repository.review.ReviewRepository;
-import cupitoo.wtwt.util.FileStore;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +27,7 @@ public class UserService {
     private final GroupRepository groupRepository;
     private final PostRepository postRepository;
     private final ReviewRepository reviewRepository;
-    private final FileStore fileStore;
+    private final S3Service s3Service;
 
     /**
      * 회원 가입
@@ -57,7 +56,7 @@ public class UserService {
 
         log.debug("request.getProfileImage() = " + request.getProfileImage().getClass());
         if(request.getProfileImage() != null) {
-            userBuilder.profileImage(fileStore.storeFile(request.getProfileImage()));
+            userBuilder.profileImage(s3Service.uploadImage(request.getProfileImage()));
         }
 
         return userRepository.save(userBuilder.build()).getId();

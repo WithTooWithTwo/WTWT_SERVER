@@ -1,8 +1,8 @@
 package cupitoo.wtwt.service;
 
 import cupitoo.wtwt.controller.review.ReviewDto;
-import cupitoo.wtwt.model.group.Group;
 import cupitoo.wtwt.model.Image;
+import cupitoo.wtwt.model.group.Group;
 import cupitoo.wtwt.model.user.User;
 import cupitoo.wtwt.model.review.PersonalityReview;
 import cupitoo.wtwt.model.review.Review;
@@ -11,15 +11,12 @@ import cupitoo.wtwt.model.review.StyleReview;
 import cupitoo.wtwt.repository.*;
 import cupitoo.wtwt.repository.group.GroupRepository;
 import cupitoo.wtwt.repository.review.*;
-import cupitoo.wtwt.util.FileStore;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -35,7 +32,7 @@ public class ReviewService {
     private final StyleRepository styleRepository;
     private final StyleReviewRepository styleReviewRepository;
     private final ReviewImageRepository reviewImageRepository;
-    private final FileStore fileStore;
+    private final S3Service s3Service;
 
     /**
      * 리뷰 생성
@@ -69,7 +66,7 @@ public class ReviewService {
         }
 
         if (reviewDto.getImages() != null) {
-            List<Image> images = fileStore.storeFiles(reviewDto.getImages());
+            List<Image> images = s3Service.uploadImageList(reviewDto.getImages());
             for (Image image : images) {
                 ReviewImage ri = new ReviewImage(review, image);
                 reviewImageRepository.save(ri);
