@@ -53,12 +53,11 @@ public class PostService {
         postRepository.save(post);
 
         List<MultipartFile> images = request.getImages();
-        if(images.size() > 0) {
+        if(images != null) {
             List<Image> imageList = s3Service.uploadImageList(images);
             for (Image i: imageList) {
                 postImageRepository.save(new PostImage(post, i));
             }
-
         }
 
         Category category = categoryRepository.findById(request.getCategory_id()).get();
@@ -76,14 +75,13 @@ public class PostService {
         groupRepository.save(group);
 
         List<PostImage> postImages = postImageRepository.findByPost(post);
-        if(postImages.size() != 0) {
+        if(postImages.size() > 0) {
             group.changeGroupImage(postImages.get(0).getImage());
         }
 
         List<String> members = request.getMembers();
         if(members.size() > 0) {
             for (String nickname : members) {
-                log.info("nickname: " + nickname);
                 User member = userRepository.findByNickname(nickname);
                 if(member == null) throw new IllegalArgumentException("존재하지 않는 유저를 그룹 멤버로 설정하였습니다.");
                 if(groupUserRepository.findGroupUserByGroupAndUser(group, member) != null) {

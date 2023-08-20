@@ -6,13 +6,14 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Data
 public class CreatePostReq {
     // 게시글
-    private List<MultipartFile> images;
+    private List<MultipartFile> images = new ArrayList<>();
     @NotNull
     private String title;
     @NotNull

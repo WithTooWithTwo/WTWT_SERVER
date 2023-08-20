@@ -1,12 +1,10 @@
 package cupitoo.wtwt.service;
 
 import cupitoo.wtwt.controller.review.ReviewDto;
-import cupitoo.wtwt.model.Image;
 import cupitoo.wtwt.model.group.Group;
 import cupitoo.wtwt.model.user.User;
 import cupitoo.wtwt.model.review.PersonalityReview;
 import cupitoo.wtwt.model.review.Review;
-import cupitoo.wtwt.model.review.ReviewImage;
 import cupitoo.wtwt.model.review.StyleReview;
 import cupitoo.wtwt.repository.*;
 import cupitoo.wtwt.repository.group.GroupRepository;
@@ -15,9 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.IOException;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -31,14 +26,12 @@ public class ReviewService {
     private final PersonalityReviewRepository personalityReviewRepository;
     private final StyleRepository styleRepository;
     private final StyleReviewRepository styleReviewRepository;
-    private final ReviewImageRepository reviewImageRepository;
-    private final S3Service s3Service;
 
     /**
      * 리뷰 생성
      */
     @Transactional
-    public Long createReview(Long sender, Long groupId, ReviewDto reviewDto) throws IOException, IllegalAccessException {
+    public Long createReview(Long sender, Long groupId, ReviewDto reviewDto) throws IllegalAccessException {
         User user = userRepository.findById(sender).get();
         Group group = groupRepository.findById(groupId).get();
 
@@ -63,14 +56,6 @@ public class ReviewService {
         for (Long id : reviewDto.getStyles()) {
             StyleReview sr = new StyleReview(review, styleRepository.findById(id).get());
             styleReviewRepository.save(sr);
-        }
-
-        if (reviewDto.getImages() != null) {
-            List<Image> images = s3Service.uploadImageList(reviewDto.getImages());
-            for (Image image : images) {
-                ReviewImage ri = new ReviewImage(review, image);
-                reviewImageRepository.save(ri);
-            }
         }
 
         return review.getId();

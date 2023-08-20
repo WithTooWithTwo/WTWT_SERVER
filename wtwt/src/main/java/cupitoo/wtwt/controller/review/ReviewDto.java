@@ -18,5 +18,4 @@ public class ReviewDto {
     private List<Long> personalities;
     private List<Long> styles;
     private String comment;
-    private List<MultipartFile> images;
 }

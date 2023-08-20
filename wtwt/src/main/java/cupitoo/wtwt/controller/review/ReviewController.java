@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,25 +18,21 @@ import java.util.List;
 public class ReviewController {
     private final ReviewService reviewService;
 
-
     /**
      * 그룹에서 리뷰하기 -> 리뷰 당한 사람의 rate update!
      */
     @PostMapping("/{groupId}")
     public PostReviewRes postReviews(@Login Long sender,
                                   @PathVariable Long groupId,
-                                  @ModelAttribute PostReviewReq request) throws IOException, IllegalAccessException {
+                                  @RequestBody List<ReviewDto> request) throws IllegalAccessException {
 
-        log.debug("request: " + request.getReviews());
         List<Long> result = new ArrayList<>();
-        for (ReviewDto reviewDto : request.getReviews()) {
-            log.debug("review From " + sender + " To " + reviewDto.getReceiverId());
+        for (ReviewDto reviewDto : request) {
             result.add(reviewService.createReview(sender, groupId, reviewDto));
         }
 
         return new PostReviewRes(result);
     }
-
 
     /**
      * 리뷰 보기 -> 별점

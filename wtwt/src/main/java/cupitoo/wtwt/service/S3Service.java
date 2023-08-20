@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import cupitoo.wtwt.model.Image;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class S3Service {
@@ -26,6 +28,7 @@ public class S3Service {
     private String bucket;
 
     public Image uploadImage(MultipartFile multipartFile) {
+        if(multipartFile.getOriginalFilename().isEmpty()) return null;
         String fileName = createFileName(multipartFile.getOriginalFilename());
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
@@ -46,9 +49,6 @@ public class S3Service {
     }
 
     public List<Image> uploadImageList(List<MultipartFile> multipartFileList) {
-        for (MultipartFile multipartFile : multipartFileList) {
-            uploadImage(multipartFile);
-        }
         List<Image> images = multipartFileList.stream()
                 .map(multipartFile -> uploadImage(multipartFile))
                 .collect(Collectors.toList());
