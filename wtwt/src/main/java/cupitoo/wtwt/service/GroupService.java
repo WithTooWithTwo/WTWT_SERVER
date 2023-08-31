@@ -23,6 +23,7 @@ public class GroupService {
     private final UserRepository userRepository;
     private final GroupUserRepository groupUserRepository;
     private final GroupNoticeRepository groupNoticeRepository;
+    private final GroupLinkRepository groupLinkRepository;
     private final GroupMemoRepository groupMemoRepository;
     private final NoticeRepository noticeRepository;
     private final MemoRepository memoRepository;
@@ -98,7 +99,7 @@ public class GroupService {
 
         GroupMemo gm = new GroupMemo(group, memo);
         group.addMemo(gm);
-        
+
         return gm.getId();
     }
 
@@ -127,6 +128,19 @@ public class GroupService {
         GroupLink gl = new GroupLink(group, hyperlink);
         group.addLink(gl);
         return group.getId();
+    }
+
+    @Transactional
+    public Long editLink(Long groupLinkId, String link, String description) {
+        GroupLink gl = groupLinkRepository.findById(groupLinkId).get();
+        gl.getLink().changeContents(link, description);
+        return groupLinkId;
+    }
+
+    @Transactional
+    public void removeLink(Long groupLinkId) {
+        GroupLink gl = groupLinkRepository.findById(groupLinkId).get();
+        groupLinkRepository.delete(gl);
     }
 
     /**

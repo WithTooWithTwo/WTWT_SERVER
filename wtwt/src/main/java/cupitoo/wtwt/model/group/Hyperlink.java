@@ -19,4 +19,9 @@ public class Hyperlink {
         this.link = link;
         this.name = name;
     }
+
+    public void changeContents(String link, String description) {
+        this.link = link;
+        this.name = description;
+    }
 }

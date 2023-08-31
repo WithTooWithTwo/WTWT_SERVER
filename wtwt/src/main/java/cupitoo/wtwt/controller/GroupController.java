@@ -107,4 +107,19 @@ public class GroupController {
         return new PostResponse(groupService.addLink(id, link, description));
     }
 
+    @PatchMapping("/{groupId}/link/{groupLinkId}")
+    public PostResponse editLink(@PathVariable("groupId") Long groupId,
+                                 @PathVariable("groupLinkId") Long groupLinkId,
+                                 @RequestParam("link") String link,
+                                 @RequestParam("description") String description) {
+        return new PostResponse(groupService.editLink(groupLinkId, link, description));
+    }
+
+    @DeleteMapping("/{groupId}/link/{groupLinkId}")
+    public ResponseEntity<Object> removeLink(@PathVariable("groupId") Long groupId,
+                                             @PathVariable("groupLinkId") Long groupLinkId) {
+        groupService.removeLink(groupLinkId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }
