@@ -1,7 +1,6 @@
 package cupitoo.wtwt.service;
 
 import cupitoo.wtwt.dto.GroupDto;
-import cupitoo.wtwt.dto.GroupListElement;
 import cupitoo.wtwt.dto.UserProfile;
 import cupitoo.wtwt.model.group.*;
 import cupitoo.wtwt.model.user.User;
@@ -24,6 +23,7 @@ public class GroupService {
     private final UserRepository userRepository;
     private final GroupUserRepository groupUserRepository;
     private final GroupNoticeRepository groupNoticeRepository;
+    private final GroupMemoRepository groupMemoRepository;
     private final NoticeRepository noticeRepository;
     private final MemoRepository memoRepository;
     private final HyperlinkRepository hyperlinkRepository;
@@ -71,37 +71,53 @@ public class GroupService {
 
         GroupNotice gn = new GroupNotice(group, notice);
         group.addNotice(gn);
-
-        return group.getId();
+        return gn.getId();
     }
 
     @Transactional
-    public Long editNotice(Long groupId, Long noticeId,String contents) {
-        Group group = groupRepository.findById(groupId).get();
-        Notice notice = noticeRepository.findById(noticeId).get();
-        notice.changeContents(contents);
-        return noticeId;
+    public Long editNotice(Long groupNoticeId, String contents) {
+        GroupNotice gn = groupNoticeRepository.findById(groupNoticeId).get();
+        gn.getNotice().changeContents(contents);
+        return gn.getNotice().getId();
     }
 
     @Transactional
-    public void removeNotice(Long groupId, Long noticeId) {
-        Group group = groupRepository.findById(groupId).get();
-        GroupNotice gn = groupNoticeRepository.findById(noticeId).get();
-        group.removeNotice(gn);
+    public void removeNotice(Long groupNoticeId) {
+        GroupNotice gn = groupNoticeRepository.findById(groupNoticeId).get();
         groupNoticeRepository.delete(gn);
     }
 
+    /**
+     * 메모
+     */
     @Transactional
-    public Long addMemo(Long id, String contents) {
-        Group group = groupRepository.findById(id).get();
+    public Long addMemo(Long groupId, String contents) {
+        Group group = groupRepository.findById(groupId).get();
         Memo memo = new Memo(contents);
         memoRepository.save(memo);
 
         GroupMemo gm = new GroupMemo(group, memo);
         group.addMemo(gm);
-        return group.getId();
+        
+        return gm.getId();
     }
 
+    @Transactional
+    public Long editMemo(Long groupMemoId, String contents) {
+        GroupMemo gm = groupMemoRepository.findById(groupMemoId).get();
+        gm.getMemo().changeContents(contents);
+        return groupMemoId;
+    }
+
+    @Transactional
+    public void removeMemo(Long groupMemoId) {
+        GroupMemo gm = groupMemoRepository.findById(groupMemoId).get();
+        groupMemoRepository.delete(gm);
+    }
+
+    /**
+     * 링크
+     */
     @Transactional
     public Long addLink(Long id, String link, String description) {
         Group group = groupRepository.findById(id).get();

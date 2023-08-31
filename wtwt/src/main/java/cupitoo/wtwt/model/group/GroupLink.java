@@ -18,7 +18,7 @@ public class GroupLink extends BaseTimeEntity {
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "link_id")
     private Hyperlink link;
 

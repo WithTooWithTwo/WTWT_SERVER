@@ -17,7 +17,7 @@ public class GroupMemo {
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "memo_id")
     private Memo memo;
 

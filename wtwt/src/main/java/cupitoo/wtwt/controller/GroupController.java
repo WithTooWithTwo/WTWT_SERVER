@@ -6,6 +6,9 @@ import cupitoo.wtwt.dto.UserProfile;
 import cupitoo.wtwt.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,32 +54,47 @@ public class GroupController {
     /**
      * 공지사항
      */
-    @PostMapping("/{id}/notice")
-    public PostResponse addNotice(@PathVariable("id") Long groupId,
+    @PostMapping("/{groupId}/notice")
+    public PostResponse addNotice(@PathVariable("groupId") Long groupId,
                                   @RequestParam("contents") String contents) {
         return new PostResponse(groupService.addNotice(groupId, contents));
     }
 
-    @PatchMapping("/{id}/notice/{noticeId}")
-    public PostResponse editNotice(@PathVariable("id") Long groupId,
-                                   @PathVariable("noticeId") Long noticeId,
-                                  @RequestParam("contents") String contents) {
-        return new PostResponse(groupService.editNotice(groupId, noticeId, contents));
+    @PatchMapping("/{groupId}/notice/{groupNoticeId}")
+    public PostResponse editNotice(@PathVariable("groupId") Long groupId,
+                                   @PathVariable("groupNoticeId") Long groupNoticeId,
+                                   @RequestParam("contents") String contents) {
+        return new PostResponse(groupService.editNotice(groupNoticeId, contents));
     }
 
-    @DeleteMapping("/{id}/notice/{noticeId}")
-    public PostResponse editNotice(@PathVariable("id") Long groupId,
-                                   @PathVariable("noticeId") Long noticeId) {
-        return new PostResponse(200L);
+    @DeleteMapping("/{groupId}/notice/{groupNoticeId}")
+    public ResponseEntity<Object> removeNotion(@PathVariable("groupId") Long groupId,
+                                               @PathVariable("groupNoticeId") Long groupNoticeId) {
+        groupService.removeNotice(groupNoticeId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
      * 메모
      */
-    @PostMapping("/{id}/memo")
-    public PostResponse addMemo(@PathVariable("id") Long id,
-                                  @RequestParam("contents") String contents) {
-        return new PostResponse(groupService.addMemo(id, contents));
+    @PostMapping("/{groupId}/memo")
+    public PostResponse addMemo(@PathVariable("groupId") Long groupId,
+                                @RequestParam("contents") String contents) {
+        return new PostResponse(groupService.addMemo(groupId, contents));
+    }
+
+    @PatchMapping("/{groupId}/memo/{groupMemoId}")
+    public PostResponse editMemo(@PathVariable("groupId") Long groupId,
+                                 @PathVariable("groupMemoId") Long groupMemoId,
+                                 @RequestParam("contents") String contents) {
+        return new PostResponse(groupService.editMemo(groupMemoId, contents));
+    }
+
+    @DeleteMapping("/{groupId}/memo/{groupMemoId}")
+    public ResponseEntity<Object> removeMemo(@PathVariable("groupId") Long groupId,
+                                               @PathVariable("groupMemoId") Long groupMemoId) {
+        groupService.removeMemo(groupMemoId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     /**
