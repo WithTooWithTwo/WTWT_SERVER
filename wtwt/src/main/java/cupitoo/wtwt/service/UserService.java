@@ -1,7 +1,9 @@
 package cupitoo.wtwt.service;
 
+import com.querydsl.core.types.dsl.StringPath;
 import cupitoo.wtwt.controller.user.GroupListElementsForUserInfo;
 import cupitoo.wtwt.controller.user.SignUpReq;
+import cupitoo.wtwt.dto.CommentReview;
 import cupitoo.wtwt.dto.UserDto;
 import cupitoo.wtwt.dto.UserProfile;
 import cupitoo.wtwt.model.user.User;
@@ -9,6 +11,7 @@ import cupitoo.wtwt.repository.UserRepository;
 import cupitoo.wtwt.repository.group.GroupRepository;
 import cupitoo.wtwt.repository.group.PostRepository;
 import cupitoo.wtwt.repository.review.ReviewRepository;
+import cupitoo.wtwt.repository.review.StatisticsReview;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static cupitoo.wtwt.model.review.QPersonalityReview.personalityReview;
+import static cupitoo.wtwt.model.review.QStyleReview.styleReview;
 
 @Service
 @Slf4j
@@ -87,9 +94,17 @@ public class UserService {
                 .countsOfGroups(groupRepository.countGroupByUser(user))
                 .countsOfPosts(postRepository.countPostByUser(user))
                 .countsOfReviews(reviewRepository.countReviewByReceiver(user))
-//                .styles(reviewRepository.findStylesByUser(user))
-//                .personalities(reviewRepository.findPersonalitiesByUser(user))
-                .comments(reviewRepository.findCommentsByUser(user));
+                .styles(reviewRepository.getUserStyles(user)
+                        .stream()
+                        .map(t -> new StatisticsReview(t.get(styleReview.style.type), t.get(styleReview.style.type.count()).intValue()))
+                        .collect(Collectors.toList()))
+                .personalities(reviewRepository.getUserPersonality(user)
+                        .stream().map(t -> new StatisticsReview(t.get(personalityReview.personality.type), t.get(personalityReview.personality.type.count()).intValue()))
+                        .collect(Collectors.toList()))
+                .reviews(reviewRepository.findAllReviewWithCommentByReceiver(user)
+                        .stream()
+                        .map(r -> new CommentReview(r))
+                        .collect(Collectors.toList()));
 
         if(isMe == false) {
             userBuilder.myGroups(groupRepository.findIdsByUser(user)

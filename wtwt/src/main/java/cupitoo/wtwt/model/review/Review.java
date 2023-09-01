@@ -1,5 +1,6 @@
 package cupitoo.wtwt.model.review;
 
+import cupitoo.wtwt.model.BaseTimeEntity;
 import cupitoo.wtwt.model.group.Group;
 import cupitoo.wtwt.model.user.User;
 import jakarta.persistence.*;
@@ -11,16 +12,19 @@ import org.hibernate.validator.constraints.Range;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class Review {
+public class Review extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
     private Long id;
     @Range(min = 0, max = 5) //별점은 0 - 5 사이의 정수
-    private Integer rate;
+    private Float rate;
     private String comment;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "receiver")
     private User receiver;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender")
+    private User sender;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name= "group_id")
     private Group group;

@@ -22,6 +22,7 @@ public class GroupDto {
     private LocalDate firstDay;
     private LocalDate lastDay;
     private UserProfile leader;
+    private List<String> tags = new ArrayList<>();
     private List<UserProfile> members = new ArrayList<>();
     private List<StringDataDto> notices = new ArrayList<>();
     private List<HyperlinkDto> places = new ArrayList<>();
@@ -37,6 +38,11 @@ public class GroupDto {
         this.firstDay = group.getFirstDay();
         this.lastDay = group.getLastDay();
         this.leader = new UserProfile(group.getLeader());
+        if(group.getTags() != null) {
+            this.tags =  group.getTags().stream()
+                    .map(t -> t.getTag().getContents())
+                    .collect(Collectors.toList());
+        }
         if(group.getMembers() != null) {
             this.members = group.getMembers().stream()
                     .map(m -> new UserProfile(m.getUser()))

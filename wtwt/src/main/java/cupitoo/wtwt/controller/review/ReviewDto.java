@@ -12,7 +12,7 @@ import java.util.Optional;
 public class ReviewDto {
     @NotNull
     @Range(min = 0, max = 5) //별점은 0 - 5 사이의 정수
-    private Integer rate;
+    private Float rate;
     @NotNull
     private Long receiverId;
     private List<Long> personalities;

@@ -1,6 +1,7 @@
 package cupitoo.wtwt.dto;
 
 import cupitoo.wtwt.controller.user.GroupListElementsForUserInfo;
+import cupitoo.wtwt.repository.review.StatisticsReview;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,7 @@ public class UserDto {
     private Integer countsOfReviews;
 
     private List<GroupListElementsForUserInfo> myGroups;
-    private List<String> styles;
-    private List<String> personalities;
-    private List<String> comments;
+    private List<StatisticsReview> styles;
+    private List<StatisticsReview> personalities;
+    private List<CommentReview> reviews;
 }

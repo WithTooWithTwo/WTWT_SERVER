@@ -31,16 +31,17 @@ public class ReviewService {
      * 리뷰 생성
      */
     @Transactional
-    public Long createReview(Long sender, Long groupId, ReviewDto reviewDto) throws IllegalAccessException {
-        User user = userRepository.findById(sender).get();
+    public Long createReview(Long userId, Long groupId, ReviewDto reviewDto) throws IllegalAccessException {
+        User sender = userRepository.findById(userId).get();
         Group group = groupRepository.findById(groupId).get();
 
-        validatePermission(user, group);
+        validatePermission(sender, group);
         log.debug("ReceiverId: " + reviewDto.getReceiverId());
         User receiver = userRepository.findById(reviewDto.getReceiverId()).get();
         Review review = Review.builder()
                 .rate(reviewDto.getRate())
                 .receiver(receiver)
+                .sender(sender)
                 .group(group)
                 .comment(reviewDto.getComment())
                 .build();
