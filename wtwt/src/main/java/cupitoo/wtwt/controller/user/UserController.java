@@ -3,6 +3,7 @@ package cupitoo.wtwt.controller.user;
 import cupitoo.wtwt.annotation.Login;
 import cupitoo.wtwt.controller.Error;
 import cupitoo.wtwt.dto.UserDto;
+import cupitoo.wtwt.dto.UserProfile;
 import cupitoo.wtwt.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,20 @@ public class UserController {
     @GetMapping("/{id}")
     public UserDto findUser(@PathVariable("id") Long userId) throws IOException {
         return userService.findOne(userId, false);
+    }
+
+    /**
+     * 유저 존재 여부 검사
+     */
+    @GetMapping("/check")
+    public UserCheckResult checkUser(@RequestParam String nickname) {
+        UserCheckResult result = new UserCheckResult();
+        userService.isExist(nickname).ifPresent(user -> {
+            result.setIsExist(true);
+            result.setUser(new UserProfile(user));
+        });
+
+        return result;
     }
 
 }

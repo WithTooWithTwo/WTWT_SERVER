@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -98,5 +99,12 @@ public class UserService {
         }
 
         return userBuilder.build();
+    }
+
+    /**
+     * 해당 nickname을 가진 유저 존재 여부 check
+     */
+    public Optional<User> isExist(String nickname) {
+        return Optional.ofNullable(userRepository.findByNickname(nickname));
     }
 }
