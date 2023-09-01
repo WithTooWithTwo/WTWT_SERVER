@@ -42,6 +42,9 @@ public class PostDetails {
         this.lightning = group.isLightning();
         this.firstDay = group.getFirstDay();
         this.lastDay = group.getLastDay();
+        this.tags = group.getTags().stream()
+                .map(t -> t.getTag().getContents())
+                .collect(Collectors.toList());
         this.members = members.stream()
                 .map(m -> new UserProfile(m))
                 .collect(Collectors.toList());

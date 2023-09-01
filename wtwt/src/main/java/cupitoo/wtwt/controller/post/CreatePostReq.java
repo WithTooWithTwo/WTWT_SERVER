@@ -26,6 +26,7 @@ public class CreatePostReq {
     private String firstDay;
     private String lastDay;
     private Boolean lightning;
+    private List<String> tags;
 
     // 선호 동행 정보
     private Integer preferHeadCount; // 원하는 동행 인원

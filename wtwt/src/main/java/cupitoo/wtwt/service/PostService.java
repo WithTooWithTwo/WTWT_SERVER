@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.tags.form.TagWriter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -33,6 +34,7 @@ public class PostService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final GroupUserRepository groupUserRepository;
+    private final GroupTagRepository groupTagRepository;
     private final S3Service s3Service;
 
     /**
@@ -91,6 +93,14 @@ public class PostService {
                     GroupUser groupUser = new GroupUser(group, member);
                     groupUserRepository.save(groupUser);
                 }
+            }
+        }
+
+        List<String> tags = request.getTags();
+        if(tags.size() > 0) {
+            for(String tag: tags) {
+                GroupTag gt = new GroupTag(group, new Tag(tag));
+                groupTagRepository.save(gt);
             }
         }
 

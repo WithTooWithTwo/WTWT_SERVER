@@ -39,6 +39,8 @@ public class Group {
     private LocalDate firstDay;
     private LocalDate lastDay;
     private boolean lightning = false;
+    @OneToMany(mappedBy = "group")
+    private List<GroupTag> tags = new ArrayList<>();
     @Embedded
     private Preference preference;
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
@@ -58,6 +60,7 @@ public class Group {
            if(gu == member) members.remove(i);
         }
     }
+    public void addTag(GroupTag tag) { this.tags.add(tag); }
     public void addNotice(GroupNotice notice) {
         this.notices.add(notice);
     }
