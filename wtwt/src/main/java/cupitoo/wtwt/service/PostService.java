@@ -9,13 +9,13 @@ import cupitoo.wtwt.model.user.User;
 import cupitoo.wtwt.model.post.Post;
 import cupitoo.wtwt.model.post.PostImage;
 import cupitoo.wtwt.repository.*;
+import cupitoo.wtwt.repository.CategoryRepository;
 import cupitoo.wtwt.repository.group.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.tags.form.TagWriter;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

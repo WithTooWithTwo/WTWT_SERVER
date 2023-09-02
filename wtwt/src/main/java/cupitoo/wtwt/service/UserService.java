@@ -37,6 +37,10 @@ public class UserService {
     private final ReviewRepository reviewRepository;
     private final S3Service s3Service;
 
+    public User findUserById(Long id) {
+        return userRepository.findById(id).get();
+    }
+
     /**
      * 회원 가입
      */
