@@ -12,7 +12,9 @@ import cupitoo.wtwt.repository.group.GroupRepository;
 import cupitoo.wtwt.repository.group.PostRepository;
 import cupitoo.wtwt.repository.review.ReviewRepository;
 import cupitoo.wtwt.repository.review.StatisticsReview;
+import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -87,7 +89,7 @@ public class UserService {
         }
     }
 
-    public UserDto findOne(Long userId, @Nullable Boolean isMe) {
+    public UserDto findOne(@NotNull Long userId, Boolean isMe) {
         User user = userRepository.findById(userId).get();
         UserDto.UserDtoBuilder userBuilder = UserDto.builder()
                 .id(user.getId())

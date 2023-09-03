@@ -8,5 +8,5 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ChatRoomRepositoryCustom {
-    List<ChatRoom> findRoomsByUser(@Param("user") User user);
+    List<ChatRoom> findRoomsByUser(User user);
 }

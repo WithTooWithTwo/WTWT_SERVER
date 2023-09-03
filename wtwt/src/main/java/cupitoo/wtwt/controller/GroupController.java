@@ -120,4 +120,12 @@ public class GroupController {
         groupService.removeLink(groupLinkId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    /**
+     * 초대 보내기
+     */
+    @PostMapping("/{userId}/invite/{groupId}")
+    public void invite(@PathVariable Long userId, @PathVariable Long groupId) {
+        groupService.inviteToGroup(userId, groupId);
+    }
 }

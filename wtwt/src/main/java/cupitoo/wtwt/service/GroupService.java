@@ -1,9 +1,14 @@
 package cupitoo.wtwt.service;
 
 import cupitoo.wtwt.dto.GroupDto;
+import cupitoo.wtwt.dto.NotificationDto;
 import cupitoo.wtwt.dto.UserProfile;
+import cupitoo.wtwt.model.Notification;
+import cupitoo.wtwt.model.NotificationType;
 import cupitoo.wtwt.model.group.*;
 import cupitoo.wtwt.model.user.User;
+import cupitoo.wtwt.repository.EmitterRepository;
+import cupitoo.wtwt.repository.NotificationRepository;
 import cupitoo.wtwt.repository.UserRepository;
 import cupitoo.wtwt.repository.group.*;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +36,8 @@ public class GroupService {
     private final NoticeRepository noticeRepository;
     private final MemoRepository memoRepository;
     private final HyperlinkRepository hyperlinkRepository;
+    private final NotificationRepository notificationRepository;
+    private final NotificationService notificationService;
 
     /**
      * 그룹 조회
@@ -170,5 +177,25 @@ public class GroupService {
         GroupUser gu = groupUserRepository.findGroupUserByGroupAndUser(group, member);
         group.removeMember(gu);
         groupUserRepository.delete(gu);
+    }
+
+    /**
+     * 그룹초대
+     */
+    public void inviteToGroup(Long userId, Long groupId) {
+        User receiver = userRepository.findById(userId).get();
+        Group group = groupRepository.findById(groupId).get();
+
+        Notification notification = Notification.builder()
+                .receiver(receiver)
+                .group(group)
+                .isRead(false)
+                .message(group.getLeader().getName() + "님의 " + group.getGroupName())
+                .type(NotificationType.INVITATION)
+                .build();
+        notificationRepository.save(notification);
+
+        NotificationDto data = new NotificationDto(notification);
+        notificationService.notify(userId, data);
     }
 }
